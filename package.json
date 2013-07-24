@@ -11,6 +11,9 @@
     "mocha": "~1.12.0",
     "glob": "~3.2.6"
   },
+  "bin": {
+    "geojsonhint": "./bin/geojsonhint"
+  },
   "scripts": {
     "test": "mocha -R spec"
   },
@@ -28,6 +31,8 @@
     "url": "https://github.com/tmcw/geojsonhint/issues"
   },
   "dependencies": {
-    "jsonlint-lines": "~1.6.0"
+    "jsonlint-lines": "~1.6.0",
+    "optimist": "~0.6.0",
+    "colors": "~0.6.0-1"
   }
 }

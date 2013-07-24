@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    path = require('path'),
+    geojsonhint = require('../'),
+    colors = require('colors'),
+    argv = require('optimist')
+        .usage('Usage: $0 FILE.geojson')
+        .demand(1)
+        .argv;
+
+var errors = geojsonhint.hint(fs.readFileSync(argv._[0], 'utf8'));
+
+if (errors) {
+    if (errors instanceof Error) {
+        console.log('invalid JSON');
+        throw errors;
+    }
+    errors.forEach(function(e) {
+        console.log('line %s, %s', (''+e.line), e.message.red);
+    });
+}
