@@ -1,0 +1,1 @@
+# geojson lint in js
