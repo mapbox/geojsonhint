@@ -5,8 +5,19 @@ function hint(str) {
     var errors = [];
 
     function root(_) {
-        if (!_.type) return 'The type member is required and was not found';
-        types[_.type](_);
+        if (!_.type) {
+            errors.push({
+                message: 'The type member is required and was not found',
+                line: _.__line__
+            });
+        } else if (!types[_.type]) {
+            errors.push({
+                message: 'The type ' + _.type + ' is unknown',
+                line: _.__line__
+            });
+        } else {
+            types[_.type](_);
+        }
     }
 
     function requiredProperty(_, name, type) {
