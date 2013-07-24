@@ -26,5 +26,8 @@
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/tmcw/geojsonhint/issues"
+  },
+  "dependencies": {
+    "jsonlint-lines": "~1.6.0"
   }
 }

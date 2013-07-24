@@ -1,4 +1,4 @@
-var jsonlint = require('jsonlint');
+var jsonlint = require('jsonlint-lines');
 
 function hint(str) {
 
