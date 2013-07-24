@@ -52,18 +52,18 @@ function hint(str) {
     }
 
     // http://geojson.org/geojson-spec.html#positions
-    function position(_) {
+    function position(_, line) {
         if (!Array.isArray(_)) {
             return errors.push({
                 message: 'position should be an array, is a ' + (typeof _) +
                     ' instead',
-                line: _.__line__
+                line: _.__line__ || line
             });
         } else {
             if (_.length < 2) {
                 return errors.push({
                     message: 'position must have 2 or more elements',
-                    line: _.__line__
+                    line: _.__line__ || line
                 });
             }
             if (_.some(function(p) {
@@ -71,9 +71,29 @@ function hint(str) {
             })) {
                 return errors.push({
                     message: 'each element in a position must be a number',
-                    line: _.__line__
+                    line: _.__line__ || line
                 });
             }
+        }
+    }
+
+    function positionArray(coords, depth, line) {
+        if (line === undefined && coords.__line__ !== undefined) {
+            line = coords.__line__;
+        }
+        if (depth === 0) {
+            return position(coords, line);
+        } else {
+            if (!Array.isArray(coords)) {
+                return errors.push({
+                    message: 'coordinates should be an array, are an ' + (typeof coords) +
+                        'instead',
+                    line: line
+                });
+            }
+            coords.forEach(function(c) {
+                positionArray(c, depth - 1, c.__line__ || line);
+            });
         }
     }
 
@@ -85,24 +105,34 @@ function hint(str) {
     }
 
     function Polygon(_) {
-        requiredProperty(_, 'coordinates', 'array');
+        if (!requiredProperty(_, 'coordinates', 'array')) {
+            positionArray(_.coordinates, 2);
+        }
     }
 
     function MultiPolygon(_) {
-        requiredProperty(_, 'coordinates', 'array');
+        if (!requiredProperty(_, 'coordinates', 'array')) {
+            positionArray(_.coordinates, 3);
+        }
     }
 
     function LineString(_) {
-        requiredProperty(_, 'coordinates', 'array');
+        if (!requiredProperty(_, 'coordinates', 'array')) {
+            positionArray(_.coordinates, 1);
+        }
     }
 
     function MultiLineString(_) {
-        requiredProperty(_, 'coordinates', 'array');
+        if (!requiredProperty(_, 'coordinates', 'array')) {
+            positionArray(_.coordinates, 2);
+        }
     }
 
     // http://geojson.org/geojson-spec.html#multipoint
     function MultiPoint(_) {
-        requiredProperty(_, 'coordinates', 'array');
+        if (!requiredProperty(_, 'coordinates', 'array')) {
+            positionArray(_.coordinates, 1);
+        }
     }
 
     function GeometryCollection(_) {
