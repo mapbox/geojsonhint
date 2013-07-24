@@ -13,7 +13,11 @@ Lint a file - given _as a string_ - with the GeoJSON expectations baked in.
 
 ## install
 
-    npm install geojsonhint
+    # as a binary
+    npm install -g geojsonhint
+
+    # as a library
+    npm install --save geojsonhint
 
 ## See Also
 
