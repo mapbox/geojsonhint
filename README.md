@@ -19,6 +19,11 @@ Lint a file - given _as a string_ - with the GeoJSON expectations baked in.
     # as a library
     npm install --save geojsonhint
 
+Use as a binary:
+
+    ➟ geojsonhint test.geojson
+    line 9, each element in a position must be a number
+
 ## See Also
 
 [geojsonlint.com](http://geojsonlint.com/) does this server-side
