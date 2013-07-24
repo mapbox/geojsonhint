@@ -144,6 +144,7 @@ function hint(str) {
     function Feature(_) {
         requiredProperty(_, 'properties', 'object');
         requiredProperty(_, 'geometry', 'object');
+        root(_.geometry);
     }
 
     var types = {
