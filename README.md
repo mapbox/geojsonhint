@@ -21,8 +21,13 @@ An example of the output:
 
 ## use it
 
-    # as a library
+as a library
+
     npm install --save geojsonhint
+
+as a web library
+
+    curl https://raw.github.com/tmcw/geojsonhint/master/geojsonhint.js > geojsonhint.js
 
 ## binary
 
@@ -42,6 +47,17 @@ Options:
 ➟ geojsonhint test.geojson
 line 9, each element in a position must be a number
 ```
+
+## developing
+
+Tests:
+
+    npm test
+
+Building the browser version:
+
+    npm install -g browserify
+    make
 
 ## See Also
 
