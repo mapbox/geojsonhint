@@ -6,6 +6,9 @@ var fs = require('fs'),
     colors = require('colors'),
     argv = require('optimist')
         .usage('Usage: $0 FILE.geojson')
+        .alias('j', 'json')
+        .describe('json', 'output json-formatted data for hints')
+        .boolean('json')
         .demand(1)
         .argv;
 
@@ -16,7 +19,11 @@ if (errors) {
         console.log('invalid JSON');
         throw errors;
     }
-    errors.forEach(function(e) {
-        console.log('line %s, %s', (''+e.line), e.message.red);
-    });
+    if (argv.json) {
+        console.log(JSON.stringify(errors, null, 2));
+    } else {
+        errors.forEach(function(e) {
+            console.log('line %s, %s', (''+e.line), e.message.red);
+        });
+    }
 }

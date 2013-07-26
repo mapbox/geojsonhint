@@ -1,0 +1,10 @@
+[
+  {
+    "message": "\"type\" property required",
+    "line": 2
+  },
+  {
+    "message": "\"properties\" property required",
+    "line": 2
+  }
+]
