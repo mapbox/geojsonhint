@@ -20,6 +20,10 @@ function hint(str) {
         }
     }
 
+    function everyIs(_, type) {
+        return _.every(function(x) { return typeof x === 'number'; });
+    }
+
     function requiredProperty(_, name, type) {
         if (typeof _[name] == 'undefined') {
             return errors.push({
@@ -45,6 +49,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#feature-collection-objects
     function FeatureCollection(_) {
         crs(_);
         bbox(_);
@@ -68,9 +73,7 @@ function hint(str) {
                     line: _.__line__ || line
                 });
             }
-            if (_.some(function(p) {
-                return (typeof p !== 'number');
-            })) {
+            if (!everyIs(_, 'number')) {
                 return errors.push({
                     message: 'each element in a position must be a number',
                     line: _.__line__ || line
@@ -110,9 +113,7 @@ function hint(str) {
     function bbox(_) {
         if (!_.bbox) return;
         if (Array.isArray(_.bbox)) {
-            if (_.bbox.some(function(p) {
-                return (typeof p !== 'number');
-            })) {
+            if (!everyIs(_.bbox, 'number')) {
                 return errors.push({
                     message: 'each element in a bbox property must be a number',
                     line: _.bbox.__line__
@@ -135,6 +136,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#polygon
     function Polygon(_) {
         crs(_);
         bbox(_);
@@ -143,6 +145,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#multipolygon
     function MultiPolygon(_) {
         crs(_);
         bbox(_);
@@ -151,6 +154,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#linestring
     function LineString(_) {
         crs(_);
         bbox(_);
@@ -159,6 +163,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#multilinestring
     function MultiLineString(_) {
         crs(_);
         bbox(_);

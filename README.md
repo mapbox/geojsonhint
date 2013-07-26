@@ -10,19 +10,38 @@ standard.
 `errors = geojsonhint.hint(fileAsString)`
 
 Lint a file - given _as a string_ - with the GeoJSON expectations baked in.
+An example of the output:
 
-## install
+```json
+[{
+  "message": "\"features\" property should be an array, but is an object instead",
+  "line": 1
+}]
+```
 
-    # as a binary
-    npm install -g geojsonhint
+## use it
 
     # as a library
     npm install --save geojsonhint
 
-Use as a binary:
+## binary
 
-    ➟ geojsonhint test.geojson
-    line 9, each element in a position must be a number
+Install:
+
+    npm install -g geojsonhint
+
+ ```
+ tmcw➟ geojsonhint
+Usage: node /usr/local/share/npm/bin/geojsonhint FILE.geojson
+
+Options:
+  --json  output json-formatted data for hints
+```
+
+```
+➟ geojsonhint test.geojson
+line 9, each element in a position must be a number
+```
 
 ## See Also
 
