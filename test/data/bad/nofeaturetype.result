@@ -1,0 +1,6 @@
+[
+  {
+    "message": "GeoJSON features must have a type=feature property",
+    "line": 4
+  }
+]

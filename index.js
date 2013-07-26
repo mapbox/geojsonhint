@@ -158,6 +158,12 @@ function hint(str) {
 
     function Feature(_) {
         crs(_);
+        if (_.type !== 'Feature') {
+            errors.push({
+                message: 'GeoJSON features must have a type=feature property',
+                line: _.__line__
+            });
+        }
         requiredProperty(_, 'properties', 'object');
         requiredProperty(_, 'geometry', 'object');
         root(_.geometry);
