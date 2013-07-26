@@ -46,6 +46,8 @@ function hint(str) {
     }
 
     function FeatureCollection(_) {
+        crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'features', 'array')) {
             _.features.forEach(Feature);
         }
@@ -105,9 +107,29 @@ function hint(str) {
         }
     }
 
+    function bbox(_) {
+        if (!_.bbox) return;
+        if (Array.isArray(_.bbox)) {
+            if (_.bbox.some(function(p) {
+                return (typeof p !== 'number');
+            })) {
+                return errors.push({
+                    message: 'each element in a bbox property must be a number',
+                    line: _.bbox.__line__
+                });
+            }
+        } else {
+            errors.push({
+                message: 'bbox property must be an array of numbers, but is a ' + (typeof _.bbox),
+                line: _.__line__
+            });
+        }
+    }
+
     // http://geojson.org/geojson-spec.html#point
     function Point(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             position(_.coordinates);
         }
@@ -115,6 +137,7 @@ function hint(str) {
 
     function Polygon(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             positionArray(_.coordinates, 2);
         }
@@ -122,6 +145,7 @@ function hint(str) {
 
     function MultiPolygon(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             positionArray(_.coordinates, 3);
         }
@@ -129,6 +153,7 @@ function hint(str) {
 
     function LineString(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             positionArray(_.coordinates, 1);
         }
@@ -136,6 +161,7 @@ function hint(str) {
 
     function MultiLineString(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             positionArray(_.coordinates, 2);
         }
@@ -144,6 +170,7 @@ function hint(str) {
     // http://geojson.org/geojson-spec.html#multipoint
     function MultiPoint(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
             positionArray(_.coordinates, 1);
         }
@@ -151,6 +178,7 @@ function hint(str) {
 
     function GeometryCollection(_) {
         crs(_);
+        bbox(_);
         if (!requiredProperty(_, 'geometries', 'array')) {
             _.geometries.forEach(root);
         }
@@ -158,6 +186,7 @@ function hint(str) {
 
     function Feature(_) {
         crs(_);
+        bbox(_);
         if (_.type !== 'Feature') {
             errors.push({
                 message: 'GeoJSON features must have a type=feature property',
