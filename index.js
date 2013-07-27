@@ -105,8 +105,16 @@ function hint(str) {
     function crs(_) {
         if (!_.crs) return;
         if (typeof _.crs === 'object') {
-            requiredProperty(_.crs, 'type', 'string');
-            requiredProperty(_.crs, 'properties', 'object');
+            var strErr = requiredProperty(_.crs, 'type', 'string'),
+                propErr = requiredProperty(_.crs, 'properties', 'object');
+            if (!strErr && !propErr) {
+                // http://geojson.org/geojson-spec.html#named-crs
+                if (_.crs.type == 'name') {
+                    requiredProperty(_.crs.properties, 'name', 'string');
+                } else if (_.crs.type == 'link') {
+                    requiredProperty(_.crs.properties, 'href', 'string');
+                }
+            }
         }
     }
 
