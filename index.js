@@ -2,7 +2,7 @@ var jsonlint = require('jsonlint-lines');
 
 function hint(str) {
 
-    var errors = [];
+    var errors = [], gj;
 
     function root(_) {
         if (!_.type) {
