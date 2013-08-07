@@ -223,6 +223,13 @@ function hint(str) {
         MultiPolygon: MultiPolygon
     };
 
+    if (typeof str !== 'string') {
+        return [{
+            message: 'Expected string input',
+            line: 0
+        }];
+    }
+
     try {
         gj = jsonlint.parse(str);
     } catch(e) {

@@ -20,6 +20,18 @@ describe('geojsonhint', function() {
             });
         });
     });
+    it('requires an input', function() {
+        expect(geojsonhint.hint(undefined)).to.eql([{
+            message: 'Expected string input',
+            line: 0
+        }]);
+    });
+    it('requires a root type', function() {
+        expect(geojsonhint.hint('{}')).to.eql([{
+            message: 'The type property is required and was not found',
+            line: 1
+        }]);
+    });
     describe('validates incorrect files', function() {
         glob.sync('test/data/bad/*.geojson').forEach(function(f) {
             it('invalidates ' + f, function() {

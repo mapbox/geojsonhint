@@ -4,7 +4,7 @@ var jsonlint = require('jsonlint-lines');
 
 function hint(str) {
 
-    var errors = [];
+    var errors = [], gj;
 
     function root(_) {
         if (!_.type) {
@@ -20,6 +20,10 @@ function hint(str) {
         } else {
             types[_.type](_);
         }
+    }
+
+    function everyIs(_, type) {
+        return _.every(function(x) { return typeof x === 'number'; });
     }
 
     function requiredProperty(_, name, type) {
@@ -47,6 +51,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#feature-collection-objects
     function FeatureCollection(_) {
         crs(_);
         bbox(_);
@@ -70,9 +75,7 @@ function hint(str) {
                     line: _.__line__ || line
                 });
             }
-            if (_.some(function(p) {
-                return (typeof p !== 'number');
-            })) {
+            if (!everyIs(_, 'number')) {
                 return errors.push({
                     message: 'each element in a position must be a number',
                     line: _.__line__ || line
@@ -104,17 +107,23 @@ function hint(str) {
     function crs(_) {
         if (!_.crs) return;
         if (typeof _.crs === 'object') {
-            requiredProperty(_.crs, 'type', 'string');
-            requiredProperty(_.crs, 'properties', 'object');
+            var strErr = requiredProperty(_.crs, 'type', 'string'),
+                propErr = requiredProperty(_.crs, 'properties', 'object');
+            if (!strErr && !propErr) {
+                // http://geojson.org/geojson-spec.html#named-crs
+                if (_.crs.type == 'name') {
+                    requiredProperty(_.crs.properties, 'name', 'string');
+                } else if (_.crs.type == 'link') {
+                    requiredProperty(_.crs.properties, 'href', 'string');
+                }
+            }
         }
     }
 
     function bbox(_) {
         if (!_.bbox) return;
         if (Array.isArray(_.bbox)) {
-            if (_.bbox.some(function(p) {
-                return (typeof p !== 'number');
-            })) {
+            if (!everyIs(_.bbox, 'number')) {
                 return errors.push({
                     message: 'each element in a bbox property must be a number',
                     line: _.bbox.__line__
@@ -137,6 +146,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#polygon
     function Polygon(_) {
         crs(_);
         bbox(_);
@@ -145,6 +155,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#multipolygon
     function MultiPolygon(_) {
         crs(_);
         bbox(_);
@@ -153,6 +164,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#linestring
     function LineString(_) {
         crs(_);
         bbox(_);
@@ -161,6 +173,7 @@ function hint(str) {
         }
     }
 
+    // http://geojson.org/geojson-spec.html#multilinestring
     function MultiLineString(_) {
         crs(_);
         bbox(_);
@@ -211,6 +224,13 @@ function hint(str) {
         Polygon: Polygon,
         MultiPolygon: MultiPolygon
     };
+
+    if (typeof str !== 'string') {
+        return [{
+            message: 'Expected string input',
+            line: 0
+        }];
+    }
 
     try {
         gj = jsonlint.parse(str);
