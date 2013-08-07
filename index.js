@@ -207,8 +207,9 @@ function hint(str) {
             });
         }
         requiredProperty(_, 'properties', 'object');
-        requiredProperty(_, 'geometry', 'object');
-        root(_.geometry);
+        if (!requiredProperty(_, 'geometry', 'object')) {
+            root(_.geometry);
+        }
     }
 
     var types = {
