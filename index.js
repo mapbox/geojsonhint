@@ -21,7 +21,7 @@ function hint(str) {
     }
 
     function everyIs(_, type) {
-        return _.every(function(x) { return typeof x === 'number'; });
+        return _.every(function(x) { return typeof x === type; });
     }
 
     function requiredProperty(_, name, type) {
@@ -54,6 +54,12 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'features', 'array')) {
+            if (!_.features.every(function(_) { return _; })) {
+                return errors.push({
+                    message: 'Every feature must be an object',
+                    line: _.__line__
+                });
+            }
             _.features.forEach(Feature);
         }
     }
