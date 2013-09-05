@@ -1,6 +1,6 @@
 {
   "name": "geojsonhint",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "validate and sanity-check geojson files",
   "main": "index.js",
   "directories": {
