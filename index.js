@@ -15,13 +15,14 @@ function hint(str) {
                 message: 'The type ' + _.type + ' is unknown',
                 line: _.__line__
             });
-        } else {
+        } else if (_) {
             types[_.type](_);
         }
     }
 
     function everyIs(_, type) {
-        return _.every(function(x) { return typeof x === type; });
+        // make a single exception because typeof null === 'object'
+        return _.every(function(x) { return (x !== null) && (typeof x === type); });
     }
 
     function requiredProperty(_, name, type) {
@@ -54,7 +55,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'features', 'array')) {
-            if (!_.features.every(function(_) { return _; })) {
+            if (!everyIs(_.features, 'object')) {
                 return errors.push({
                     message: 'Every feature must be an object',
                     line: _.__line__
@@ -199,7 +200,9 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'geometries', 'array')) {
-            _.geometries.forEach(root);
+            _.geometries.forEach(function(geometry) {
+                if (geometry) root(geometry);
+            });
         }
     }
 
@@ -214,7 +217,9 @@ function hint(str) {
         }
         requiredProperty(_, 'properties', 'object');
         if (!requiredProperty(_, 'geometry', 'object')) {
-            root(_.geometry);
+            // http://geojson.org/geojson-spec.html#feature-objects
+            // tolerate null geometry
+            if (_.geometry) root(_.geometry);
         }
     }
 
