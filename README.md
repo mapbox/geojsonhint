@@ -1,9 +1,13 @@
-[![Build Status](https://secure.travis-ci.org/tmcw/geojsonhint.png?branch=master)](http://travis-ci.org/tmcw/geojsonhint)
+[![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.png?branch=master)](http://travis-ci.org/mapbox/geojsonhint)
 
 # geojson lint in js
 
 A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](http://www.geojson.org/)
-standard.
+standard. geojsonhint is written _to the standard_, with no missing or additional
+opinions about structure.
+
+Thanks to `jsonlint-lines`, GeoJSON that is also not valid [JSON](http://json.org/)
+will return informative, line-oriented parsing errors.
 
 ## api
 
@@ -27,7 +31,7 @@ as a library
 
 as a web library
 
-    curl https://raw.github.com/tmcw/geojsonhint/master/geojsonhint.js > geojsonhint.js
+    curl https://raw.github.com/mapbox/geojsonhint/master/geojsonhint.js > geojsonhint.js
 
 ## binary
 
@@ -35,9 +39,9 @@ Install:
 
     npm install -g geojsonhint
 
- ```
- tmcw➟ geojsonhint
-Usage: node /usr/local/share/npm/bin/geojsonhint FILE.geojson
+```
+➟ geojsonhint
+Usage: geojsonhint FILE.geojson
 
 Options:
   --json  output json-formatted data for hints
