@@ -65,4 +65,5 @@ Building the browser version:
 
 ## See Also
 
-[geojsonlint.com](http://geojsonlint.com/) does this server-side
+* [grunt-geojsonhint](https://github.com/jieter/grunt-geojsonhint) does it as a Grunt task
+* [geojsonlint.com](http://geojsonlint.com/) does this server-side
