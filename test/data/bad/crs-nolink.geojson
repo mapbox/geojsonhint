@@ -1,0 +1,8 @@
+{
+    "crs": {
+        "type": "link",
+        "properties": { }
+    },
+    "type": "Point",
+    "coordinates": [2, 2]
+}

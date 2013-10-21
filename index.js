@@ -96,13 +96,6 @@ function hint(str) {
         if (depth === 0) {
             return position(coords, line);
         } else {
-            if (!Array.isArray(coords)) {
-                return errors.push({
-                    message: 'coordinates should be an array, are an ' + (typeof coords) +
-                        'instead',
-                    line: line
-                });
-            }
             if (depth === 1 && type) {
                 if (type === 'LinearRing' && coords.length < 4) {
                     errors.push({
@@ -258,7 +251,14 @@ function hint(str) {
     try {
         gj = jsonlint.parse(str);
     } catch(e) {
-        return e;
+        var match = e.message.match(/line (\d+)/),
+            lineNumber = 0;
+        if (match) lineNumber = parseInt(match[1], 10);
+        return {
+            line: lineNumber,
+            message: e.message,
+            error: e
+        };
     }
 
     if (typeof gj !== 'object' ||

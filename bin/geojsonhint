@@ -15,13 +15,17 @@ var fs = require('fs'),
 var errors = geojsonhint.hint(fs.readFileSync(argv._[0], 'utf8'));
 
 if (errors) {
-    if (errors instanceof Error) {
-        console.log('invalid JSON');
-        throw errors;
-    }
     if (argv.json) {
-        console.log(JSON.stringify(errors, null, 2));
+        if (errors instanceof Error) {
+            console.log(JSON.stringify(errors.toString(), null, 2));
+        } else {
+            console.log(JSON.stringify(errors, null, 2));
+        }
     } else {
+        if (errors instanceof Error) {
+            console.log('invalid JSON');
+            throw errors;
+        }
         errors.forEach(function(e) {
             console.log('line %s, %s', (''+e.line), e.message.red);
         });
