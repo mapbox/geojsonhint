@@ -254,11 +254,11 @@ function hint(str) {
         var match = e.message.match(/line (\d+)/),
             lineNumber = 0;
         if (match) lineNumber = parseInt(match[1], 10);
-        return {
+        return [{
             line: lineNumber,
             message: e.message,
             error: e
-        };
+        }];
     }
 
     if (typeof gj !== 'object' ||
