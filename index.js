@@ -252,5 +252,11 @@ function hint(str) {
 
     return errors;
 }
-
+function assert(str) {
+    var response = hint(str);
+    if (!Array.isArray(response) || response.length) {
+        throw response;
+    }
+}
 module.exports.hint = hint;
+module.exports.assert = assert;
