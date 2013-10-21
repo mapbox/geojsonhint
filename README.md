@@ -1,0 +1,3 @@
+# geojsonhint
+
+HTML/JS edition.

@@ -1,0 +1,26 @@
+{
+  "name": "geojsonhint-site",
+  "version": "0.0.0",
+  "description": "a website for geojsonhint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mapbox/geojsonhint.git"
+  },
+  "keywords": [
+    "geojsonhint",
+    "website"
+  ],
+  "author": "Tom MacWright",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/mapbox/geojsonhint/issues"
+  },
+  "dependencies": {
+    "geojsonhint": "0.2.1",
+    "codemirror": "https://github.com/tmcw/CodeMirror/archive/module-export.tar.gz"
+  }
+}
