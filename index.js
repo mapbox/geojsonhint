@@ -253,4 +253,34 @@ function hint(str) {
     return errors;
 }
 
+function GeoJSONError(info){
+    //from chai
+    //https://github.com/chaijs/chai/blob/master/chai.js#L258-L315
+	if(Array.isArray(info)){
+		info = info[0];
+	}
+    if(info.message){
+        this.message = 'GeoJSON Error: '+info.message;
+    }
+    if(info.line){
+        this.message = this.message + ' at line ' + info.line;
+    }
+}
+
+GeoJSONError.prototype = Object.create(Error.prototype);
+
+GeoJSONError.prototype.name = 'GeoJSONError';
+
+GeoJSONError.prototype.constructor = GeoJSONError;
+
+function assert(str) {
+    var response = hint(str);
+    
+    if (!Array.isArray(response) || response.length) {
+        throw new GeoJSONError(response);
+    }
+}
+
 module.exports.hint = hint;
+
+module.exports.assert = assert;
