@@ -248,6 +248,16 @@ function hint(str) {
         return e;
     }
 
+    if (typeof gj !== 'object' ||
+        gj === null ||
+        gj === undefined) {
+        errors.push({
+            message: 'The root of a GeoJSON object must be an object.',
+            line: 0
+        });
+        return errors;
+    }
+
     root(gj);
 
     return errors;

@@ -40,4 +40,24 @@ describe('geojsonhint', function() {
             });
         });
     });
+    describe('invalid roots', function() {
+        it('null', function() {
+            expect(geojsonhint.hint('null')).to.eql([{
+                message: 'The root of a GeoJSON object must be an object.',
+                line: 0
+            }]);
+        });
+        it('number', function() {
+            expect(geojsonhint.hint('1')).to.eql([{
+                message: 'The root of a GeoJSON object must be an object.',
+                line: 0
+            }]);
+        });
+        it('string', function() {
+            expect(geojsonhint.hint('"string"')).to.eql([{
+                message: 'The root of a GeoJSON object must be an object.',
+                line: 0
+            }]);
+        });
+    });
 });
