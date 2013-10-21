@@ -67,3 +67,4 @@ Building the browser version:
 
 * [grunt-geojsonhint](https://github.com/jieter/grunt-geojsonhint) does it as a Grunt task
 * [geojsonlint.com](http://geojsonlint.com/) does this server-side
+* [geojson-assert](https://github.com/calvinmetcalf/geojson-assert) does it in assertion tests
