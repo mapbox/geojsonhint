@@ -89,7 +89,7 @@ function hint(str) {
         }
     }
 
-    function positionArray(coords, depth, line) {
+    function positionArray(coords, type, depth, line) {
         if (line === undefined && coords.__line__ !== undefined) {
             line = coords.__line__;
         }
@@ -103,8 +103,21 @@ function hint(str) {
                     line: line
                 });
             }
+            if (depth === 1 && type) {
+                if (type === 'LinearRing' && coords.length < 4) {
+                    errors.push({
+                        message: 'a LinearRing of coordinates needs to have four or more positions',
+                        line: line
+                    });
+                } else if (type === 'Line' && coords.length < 2) {
+                    errors.push({
+                        message: 'a line needs to have two or more coordinates to be valid',
+                        line: line
+                    });
+                }
+            }
             coords.forEach(function(c) {
-                positionArray(c, depth - 1, c.__line__ || line);
+                positionArray(c, type, depth - 1, c.__line__ || line);
             });
         }
     }
@@ -156,7 +169,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 2);
+            positionArray(_.coordinates, 'LinearRing', 2);
         }
     }
 
@@ -165,7 +178,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 3);
+            positionArray(_.coordinates, 'LinearRing', 3);
         }
     }
 
@@ -174,7 +187,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 1);
+            positionArray(_.coordinates, 'Line', 1);
         }
     }
 
@@ -183,7 +196,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 2);
+            positionArray(_.coordinates, 'Line', 2);
         }
     }
 
@@ -192,7 +205,7 @@ function hint(str) {
         crs(_);
         bbox(_);
         if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 1);
+            positionArray(_.coordinates, '', 1);
         }
     }
 
