@@ -11,6 +11,13 @@ var editor = CodeMirror(document.getElementById('cm'), {
     smartIndent: true
 });
 
+document.getElementById('format').onclick = function() {
+    try {
+        var val = JSON.parse(editor.getValue());
+        editor.setValue(JSON.stringify(val, null, 2));
+    } catch(e) { }
+};
+
 editor.setOption('theme', 'mistakes');
 
 editor.on('change', validate);
