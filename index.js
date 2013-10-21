@@ -255,7 +255,7 @@ function hint(str) {
             lineNumber = 0;
         if (match) lineNumber = parseInt(match[1], 10);
         return [{
-            line: lineNumber,
+            line: lineNumber - 1,
             message: e.message,
             error: e
         }];
