@@ -103,8 +103,10 @@ function hint(str) {
                             message: 'a LinearRing of coordinates needs to have four or more positions',
                             line: line
                         });
-                    } 
-                    if (coords.length && (coords[coords.length-1].length !== coords[0].length || !coords[coords.length-1].every(function(position,index){
+                    }
+                    if (coords.length &&
+                        (coords[coords.length - 1].length !== coords[0].length ||
+                        !coords[coords.length - 1].every(function(position, index) {
                         return coords[0][index] === position;
                     }))) {
                         errors.push({
