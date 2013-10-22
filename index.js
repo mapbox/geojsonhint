@@ -140,6 +140,11 @@ function hint(str) {
                     requiredProperty(_.crs.properties, 'href', 'string');
                 }
             }
+        } else {
+            errors.push({
+                message: 'the value of the crs property must be an object, not a ' + (typeof _.crs),
+                line: _.__line__
+            });
         }
     }
 
