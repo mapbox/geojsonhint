@@ -97,11 +97,21 @@ function hint(str) {
             return position(coords, line);
         } else {
             if (depth === 1 && type) {
-                if (type === 'LinearRing' && coords.length < 4) {
-                    errors.push({
-                        message: 'a LinearRing of coordinates needs to have four or more positions',
-                        line: line
-                    });
+                if (type === 'LinearRing') {
+                    if (coords.length < 4) {
+                        errors.push({
+                            message: 'a LinearRing of coordinates needs to have four or more positions',
+                            line: line
+                        });
+                    } 
+                    if (coords.length && (coords[coords.length-1].length !== coords[0].length || !coords[coords.length-1].every(function(position,index){
+                        return coords[0][index] === position;
+                    }))) {
+                        errors.push({
+                            message: 'the first and last positions in a LinearRing of coordinates must be the same',
+                            line: line
+                        });
+                    }
                 } else if (type === 'Line' && coords.length < 2) {
                     errors.push({
                         message: 'a line needs to have two or more coordinates to be valid',

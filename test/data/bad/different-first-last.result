@@ -1,10 +1,6 @@
-[ 
-  { 
-    "message": "a LinearRing of coordinates needs to have four or more positions",
-    "line": 3
-  },
+[
   {
     "message": "the first and last positions in a LinearRing of coordinates must be the same",
     "line": 3
   }
-] 
+]
