@@ -109,6 +109,12 @@ function hint(str) {
                     });
                 }
             }
+            if (!Array.isArray(coords)) {
+                return errors.push({
+                    message: 'coordinates must be list of positions',
+                    line: line
+                });
+            }
             coords.forEach(function(c) {
                 positionArray(c, type, depth - 1, c.__line__ || line);
             });
