@@ -1,5 +1,5 @@
-{
-  "line": 2,
+[{
+  "line": 1,
   "message": "Parse error on line 2:\n...\": \"MultiPoint\"    \"coordinates\": [[\"fo\n----------------------^\nExpecting 'EOF', '}', ':', ',', ']', got 'STRING'",
   "error": {}
-}
+}]

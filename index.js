@@ -97,11 +97,23 @@ function hint(str) {
             return position(coords, line);
         } else {
             if (depth === 1 && type) {
-                if (type === 'LinearRing' && coords.length < 4) {
-                    errors.push({
-                        message: 'a LinearRing of coordinates needs to have four or more positions',
-                        line: line
-                    });
+                if (type === 'LinearRing') {
+                    if (coords.length < 4) {
+                        errors.push({
+                            message: 'a LinearRing of coordinates needs to have four or more positions',
+                            line: line
+                        });
+                    }
+                    if (coords.length &&
+                        (coords[coords.length - 1].length !== coords[0].length ||
+                        !coords[coords.length - 1].every(function(position, index) {
+                        return coords[0][index] === position;
+                    }))) {
+                        errors.push({
+                            message: 'the first and last positions in a LinearRing of coordinates must be the same',
+                            line: line
+                        });
+                    }
                 } else if (type === 'Line' && coords.length < 2) {
                     errors.push({
                         message: 'a line needs to have two or more coordinates to be valid',
@@ -134,6 +146,11 @@ function hint(str) {
                     requiredProperty(_.crs.properties, 'href', 'string');
                 }
             }
+        } else {
+            errors.push({
+                message: 'the value of the crs property must be an object, not a ' + (typeof _.crs),
+                line: _.__line__
+            });
         }
     }
 
@@ -260,11 +277,11 @@ function hint(str) {
         var match = e.message.match(/line (\d+)/),
             lineNumber = 0;
         if (match) lineNumber = parseInt(match[1], 10);
-        return {
-            line: lineNumber,
+        return [{
+            line: lineNumber - 1,
             message: e.message,
             error: e
-        };
+        }];
     }
 
     if (typeof gj !== 'object' ||
