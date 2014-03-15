@@ -11,7 +11,7 @@ will return informative, line-oriented parsing errors.
 
 ## api
 
-`errors = geojsonhint.hint(fileAsString)`
+`errors = geojsonhint.hint(fileAsString or JSON object)`
 
 Lint a file - given _as a string_ - with the GeoJSON expectations baked in.
 An example of the output:

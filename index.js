@@ -2,6 +2,13 @@ var jsonlint = require('jsonlint-lines');
 
 function hint(str) {
 
+    try {
+        JSON.parse(str);
+        str = str;
+    }catch(e) {
+        str = JSON.stringify(str);
+    }
+
     var errors = [], gj;
 
     function root(_) {
