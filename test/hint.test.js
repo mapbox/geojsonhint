@@ -1,6 +1,7 @@
-var expect = require('expect.js'),
+var test = require('tap').test,
     fs = require('fs'),
     glob = require('glob'),
+    fuzzer = require('fuzzer'),
     geojsonhint = require('../');
 
 function file(x) {
@@ -11,53 +12,52 @@ function filejs(x) {
     return JSON.parse(fs.readFileSync(x, 'utf8'));
 }
 
-describe('geojsonhint', function() {
-    describe('validates correct files', function(done) {
-        glob.sync('test/data/good/*.geojson').forEach(function(f) {
-            it('validates ' + f, function() {
-                var gj = file(f);
-                expect(geojsonhint.hint(gj)).to.eql([]);
-            });
-        });
+test('geojsonhint', function(t) {
+    glob.sync('test/data/good/*.geojson').forEach(function(f) {
+        var gj = file(f);
+        t.deepEqual(geojsonhint.hint(gj), [], 'good input: ' + f);
     });
-    it('requires an input', function() {
-        expect(geojsonhint.hint(undefined)).to.eql([{
-            message: 'Expected string input',
+    t.deepEqual(geojsonhint.hint(undefined), [{
+        message: 'Expected string input',
+        line: 0
+    }]);
+    t.deepEqual(geojsonhint.hint('{}'), [{
+        message: 'The type property is required and was not found',
+        line: 1
+    }]);
+    test('validates incorrect files', function(t) {
+        glob.sync('test/data/bad/*.geojson').forEach(function(f) {
+            var gj = file(f);
+            t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result')));
+        });
+        t.end();
+    });
+    test('invalid roots', function(t) {
+        t.deepEqual(geojsonhint.hint('null'), [{
+            message: 'The root of a GeoJSON object must be an object.',
             line: 0
         }]);
-    });
-    it('requires a root type', function() {
-        expect(geojsonhint.hint('{}')).to.eql([{
-            message: 'The type property is required and was not found',
-            line: 1
+        t.deepEqual(geojsonhint.hint('1'), [{
+            message: 'The root of a GeoJSON object must be an object.',
+            line: 0
         }]);
+        t.deepEqual(geojsonhint.hint('"string"'), [{
+            message: 'The root of a GeoJSON object must be an object.',
+            line: 0
+        }]);
+        t.end();
     });
-    describe('validates incorrect files', function() {
-        glob.sync('test/data/bad/*.geojson').forEach(function(f) {
-            it('invalidates ' + f, function() {
-                var gj = file(f);
-                expect(geojsonhint.hint(gj)).to.eql(filejs(f.replace('geojson', 'result')));
-            });
-        });
+    glob.sync('test/data/good/*.geojson').forEach(function(f) {
+        var mutator = fuzzer.mutate.object(filejs(f));
+        for (var i = 0; i < 100; i++) {
+            try {
+                var input = mutator();
+                geojsonhint.hint(input);
+                t.ok('done');
+            } catch(e) {
+                t.fail('exception on ' + JSON.stringify(input));
+            }
+        }
     });
-    describe('invalid roots', function() {
-        it('null', function() {
-            expect(geojsonhint.hint('null')).to.eql([{
-                message: 'The root of a GeoJSON object must be an object.',
-                line: 0
-            }]);
-        });
-        it('number', function() {
-            expect(geojsonhint.hint('1')).to.eql([{
-                message: 'The root of a GeoJSON object must be an object.',
-                line: 0
-            }]);
-        });
-        it('string', function() {
-            expect(geojsonhint.hint('"string"')).to.eql([{
-                message: 'The root of a GeoJSON object must be an object.',
-                line: 0
-            }]);
-        });
-    });
+    t.end();
 });

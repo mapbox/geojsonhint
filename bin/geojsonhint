@@ -4,17 +4,25 @@ var fs = require('fs'),
     path = require('path'),
     geojsonhint = require('../'),
     colors = require('colors'),
-    argv = require('optimist')
-        .usage('Usage: $0 FILE.geojson')
-        .alias('j', 'json')
-        .describe('json', 'output json-formatted data for hints')
-        .boolean('json')
-        .demand(1)
-        .argv;
+    concat = require('concat-stream'),
+    argv = require('minimist')(process.argv.slice(2), { boolean: 'json' });
 
-var errors = geojsonhint.hint(fs.readFileSync(argv._[0], 'utf8'));
 
-if (errors) {
+if (process.stdin.isTTY && !argv._[0]) {
+    process.stdout.write(fs.readFileSync(__dirname + '/HELP.md'));
+    process.exit(1);
+}
+
+(argv._.length ? fs.createReadStream(argv._[0]) : process.stdin).pipe(concat(hint));
+
+function hint(input) {
+
+    var errors = geojsonhint.hint(input.toString());
+
+    if (!errors) {
+        process.exit(0);
+    }
+
     if (argv.json) {
         if (errors instanceof Error) {
             console.log(JSON.stringify(errors.toString(), null, 2));
