@@ -1,3 +1,8 @@
+## 0.3.0
+
+* Now uses `tap` for tests
+* Modernized binary supports streams
+
 ## 0.2.0
 
 * JSON parse errors are now parsed and output as objects rather than raw
