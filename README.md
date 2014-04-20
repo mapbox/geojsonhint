@@ -1,6 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.png?branch=master)](http://travis-ci.org/mapbox/geojsonhint)
 
-# geojson lint in js
+# geojsonhint: complete standards-based validation for geojson
 
 A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](http://www.geojson.org/)
 standard. geojsonhint is written _to the standard_, with no missing or additional
@@ -68,4 +68,5 @@ Building the browser version:
 * [geojsonhint online](http://mapbox.github.io/geojsonhint/)
 * [grunt-geojsonhint](https://github.com/jieter/grunt-geojsonhint) does it as a Grunt task
 * [geojsonlint.com](http://geojsonlint.com/) does this server-side
+* [GeoJSON-Validation](https://github.com/craveprogramminginc/GeoJSON-Validation) is another node module for this.
 * [geojson-assert](https://github.com/calvinmetcalf/geojson-assert) does it in assertion tests
