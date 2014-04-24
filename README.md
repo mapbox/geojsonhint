@@ -65,7 +65,7 @@ Building the browser version:
 
 ## See Also
 
-* [geojsonhint online](http://mapbox.github.io/geojsonhint/)
+* [geojsonhint online](https://www.mapbox.com/geojsonhint/)
 * [grunt-geojsonhint](https://github.com/jieter/grunt-geojsonhint) does it as a Grunt task
 * [geojsonlint.com](http://geojsonlint.com/) does this server-side
 * [GeoJSON-Validation](https://github.com/craveprogramminginc/GeoJSON-Validation) is another node module for this.
