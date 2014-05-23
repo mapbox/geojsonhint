@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Detects & reports incorrectly nested LinearRing arrays
+
 ## 0.3.0
 
 * Now uses `tap` for tests
