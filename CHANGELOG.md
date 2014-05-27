@@ -1,3 +1,7 @@
+## 0.3.3
+
+* Enforces the type of the Feature.id property
+
 ## 0.3.2
 
 * Detects & reports incorrectly nested LinearRing arrays
