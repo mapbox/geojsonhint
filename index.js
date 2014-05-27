@@ -244,6 +244,9 @@ function hint(str) {
     function Feature(_) {
         crs(_);
         bbox(_);
+        if (_.id !== undefined) {
+            requiredProperty(_, 'id', 'string');
+        }
         if (_.type !== 'Feature') {
             errors.push({
                 message: 'GeoJSON features must have a type=feature property',
