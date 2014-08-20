@@ -1,3 +1,8 @@
+## 0.3.4
+
+* Tolerates `id` properties as numbers as well as strings, to match
+  the actual specification.
+
 ## 0.3.3
 
 * Enforces the type of the Feature.id property
