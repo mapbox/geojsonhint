@@ -1,3 +1,12 @@
+## 1.0.0
+
+* Declares the public API
+* This adds compatibility with objects as well as strings, and adds
+  a benchmark to confirm that it's faster.
+* Adds a .npmignore so that `npm install geojson` is significantly
+  more efficient - excludes 496kb of testing fixtures
+* Adds JSDoc comment to the source
+
 ## 0.3.4
 
 * Tolerates `id` properties as numbers as well as strings, to match
