@@ -7,8 +7,9 @@
     "test": "test"
   },
   "devDependencies": {
-    "glob": "~3.2.6",
+    "benchmark": "^1.0.0",
     "fuzzer": "~0.1.0",
+    "glob": "~3.2.6",
     "tap": "~0.4.8"
   },
   "bin": {

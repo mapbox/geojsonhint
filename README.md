@@ -2,21 +2,21 @@
 
 [![NPM](https://nodei.co/npm/geojsonhint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/geojsonhint/)
 
-# geojsonhint: complete standards-based validation for geojson
+# geojsonhint: complete, fast, standards-based validation for geojson
 
 A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](http://www.geojson.org/)
 standard. geojsonhint is written _to the standard_, with no missing or additional
 opinions about structure.
 
 Thanks to `jsonlint-lines`, GeoJSON that is also not valid [JSON](http://json.org/)
-will return informative, line-oriented parsing errors.
+can return informative, line-oriented parsing errors.
 
-## api
+## API
 
-`errors = geojsonhint.hint(fileAsString)`
+`errors = geojsonhint.hint(string or object)`
 
-Lint a file - given _as a string_ - with the GeoJSON expectations baked in.
-An example of the output:
+Lint a file, given as a string or object. This call detects all aberrations from
+the GeoJSON standards and returns them as an array of errors. An example of the output:
 
 ```json
 [{
@@ -24,6 +24,18 @@ An example of the output:
   "line": 1
 }]
 ```
+
+## Line Numbers
+
+Note that the GeoJSON can be given as a **string or as an object**. Here's how
+to choose which input to use:
+
+* `string` inputs receive **line numbers for each error**. These make errors
+  easier to track down if the GeoJSON is hand-written.
+* `object` inputs don't have line numbers but are evaluated faster, by up to 10x.
+  GeoJSONHint is _very fast already_ so unless you have identified it as a
+  bottleneck in your application, don't [prematurely optimize](http://c2.com/cgi/wiki?PrematureOptimization) based
+  on this fact.
 
 ## use it
 
@@ -35,7 +47,7 @@ as a web library
 
     curl https://raw.github.com/mapbox/geojsonhint/master/geojsonhint.js > geojsonhint.js
 
-## binary
+## As a command-line utility
 
 Install:
 
