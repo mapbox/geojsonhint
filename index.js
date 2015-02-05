@@ -31,7 +31,7 @@ function hint(str) {
     }
 
     function requiredProperty(_, name, type) {
-        if (typeof _[name] == 'undefined') {
+        if (typeof _[name] === 'undefined') {
             return errors.push({
                 message: '"' + name + '" property required',
                 line: _.__line__
@@ -151,9 +151,9 @@ function hint(str) {
                 propErr = requiredProperty(_.crs, 'properties', 'object');
             if (!strErr && !propErr) {
                 // http://geojson.org/geojson-spec.html#named-crs
-                if (_.crs.type == 'name') {
+                if (_.crs.type === 'name') {
                     requiredProperty(_.crs.properties, 'name', 'string');
-                } else if (_.crs.type == 'link') {
+                } else if (_.crs.type === 'link') {
                     requiredProperty(_.crs.properties, 'href', 'string');
                 }
             }
@@ -166,7 +166,7 @@ function hint(str) {
     }
 
     function bbox(_) {
-        if (!_.bbox) return;
+        if (!_.bbox) { return; }
         if (Array.isArray(_.bbox)) {
             if (!everyIs(_.bbox, 'number')) {
                 return errors.push({
@@ -292,7 +292,7 @@ function hint(str) {
         } catch(e) {
             var match = e.message.match(/line (\d+)/),
                 lineNumber = 0;
-            if (match) lineNumber = parseInt(match[1], 10);
+            if (match) { lineNumber = parseInt(match[1], 10); }
             return [{
                 line: lineNumber - 1,
                 message: e.message,
