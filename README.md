@@ -15,7 +15,7 @@ can return informative, line-oriented parsing errors.
 
 The basis of this tool is the published [GeoJSON](http://www.geojson.org/) 1.0 specification.
 In the few cases where [draft-geojson](https://github.com/geojson/draft-geojson/blob/master/middle.mkd),
-the ietf-candidate version of GeoJSON, is more precise (for instance, [the id property](https://github.com/mapbox/geojsonhint/issues/24), the validator follows the draft spec as well.
+the ietf-candidate version of GeoJSON, is more precise (for instance, [the id property](https://github.com/mapbox/geojsonhint/issues/24)), the validator follows the draft spec as well.
 
 ## API
 
