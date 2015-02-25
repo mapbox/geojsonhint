@@ -20,7 +20,7 @@
     "url": "https://github.com/mapbox/geojsonhint/issues"
   },
   "dependencies": {
-    "geojsonhint": "0.2.1",
+    "geojsonhint": "1.0.0",
     "codemirror": "https://github.com/tmcw/CodeMirror/archive/module-export.tar.gz"
   },
   "devDependencies": {
