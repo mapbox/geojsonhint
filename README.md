@@ -1,5 +1,6 @@
 # geojsonhint
 
+
 HTML/JS edition.
 
 To run:
