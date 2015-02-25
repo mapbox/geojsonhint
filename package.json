@@ -4,7 +4,7 @@
   "description": "a website for geojsonhint",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify index.js > site.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "dependencies": {
     "geojsonhint": "0.2.1",
     "codemirror": "https://github.com/tmcw/CodeMirror/archive/module-export.tar.gz"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3"
   }
 }

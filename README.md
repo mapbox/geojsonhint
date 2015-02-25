@@ -5,4 +5,4 @@ HTML/JS edition.
 To run:
 
     npm install
-    make
+    npm run build
