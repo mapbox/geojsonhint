@@ -40,6 +40,6 @@ function validate() {
 function makeMarker(msg) {
     var d = document.createElement('div');
     d.className = 'note warning';
-    d.innerHTML = msg;
+    d.innerText = msg;
     return d;
 }
