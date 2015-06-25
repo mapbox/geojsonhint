@@ -28,6 +28,9 @@ test('geojsonhint', function(t) {
     test('validates incorrect files', function(t) {
         glob.sync('test/data/bad/*.geojson').forEach(function(f) {
             var gj = file(f);
+            if (process.env.UPDATE) {
+                fs.writeFileSync(f.replace('geojson', 'result'), JSON.stringify(geojsonhint.hint(gj), null, 2));
+            }
             t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result')), f);
         });
         t.end();
@@ -37,7 +40,7 @@ test('geojsonhint', function(t) {
             if (f === 'test/data/bad/bad-json.geojson') return;
             var gj = filejs(f);
             if (process.env.UPDATE) {
-                fs.writeFileSync(f.replace('geojson', 'result-object'), JSON.stringify(geojsonhint.hint(gj)));
+                fs.writeFileSync(f.replace('geojson', 'result-object'), JSON.stringify(geojsonhint.hint(gj), null, 2));
             }
             t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result-object')), f);
         });

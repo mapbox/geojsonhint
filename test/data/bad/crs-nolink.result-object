@@ -1,1 +1,5 @@
-[{"message":"\"href\" property required"}]
+[
+  {
+    "message": "\"href\" property required"
+  }
+]

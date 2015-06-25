@@ -1,1 +1,5 @@
-[{"message":"a line needs to have two or more coordinates to be valid"}]
+[
+  {
+    "message": "a line needs to have two or more coordinates to be valid"
+  }
+]

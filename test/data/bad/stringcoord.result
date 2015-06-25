@@ -1,2 +1,6 @@
-[{ "message": "each element in a position must be a number",
-    "line": 9 }]
+[
+  {
+    "message": "each element in a position must be a number",
+    "line": 9
+  }
+]

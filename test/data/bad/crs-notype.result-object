@@ -1,1 +1,8 @@
-[{"message":"\"type\" property required"},{"message":"\"properties\" property required"}]
+[
+  {
+    "message": "\"type\" property required"
+  },
+  {
+    "message": "\"properties\" property required"
+  }
+]

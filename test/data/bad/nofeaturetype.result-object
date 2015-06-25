@@ -1,1 +1,5 @@
-[{"message":"GeoJSON features must have a type=feature property"}]
+[
+  {
+    "message": "GeoJSON features must have a type=feature property"
+  }
+]

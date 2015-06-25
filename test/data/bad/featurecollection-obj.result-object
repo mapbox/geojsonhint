@@ -1,1 +1,5 @@
-[{"message":"\"features\" property should be an array, but is an object instead"}]
+[
+  {
+    "message": "\"features\" property should be an array, but is an object instead"
+  }
+]
