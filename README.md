@@ -1,7 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.png?branch=master)](http://travis-ci.org/mapbox/geojsonhint)
 
-[![NPM](https://nodei.co/npm/geojsonhint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/geojsonhint/)
-
 # geojsonhint: complete, fast, standards-based validation for geojson
 
 A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](http://www.geojson.org/)
