@@ -2,10 +2,10 @@ geojsonhint
 
 usage:
 
-    geojsonhint < file.geojson
+  geojsonhint < file.geojson
 
 options:
 
---json
+--format -f
 
-    output json data for errors
+  options are pretty, json, compact. pretty is the default.

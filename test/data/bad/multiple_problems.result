@@ -1,0 +1,22 @@
+[
+  {
+    "message": "Feature \"id\" property must have a string or number value",
+    "line": 4
+  },
+  {
+    "message": "each element in a position must be a number",
+    "line": 10
+  },
+  {
+    "message": "GeoJSON features must have a type=feature property",
+    "line": 27
+  },
+  {
+    "message": "GeoJSON features must have a type=feature property",
+    "line": 38
+  },
+  {
+    "message": "\"coordinates\" property should be an array, but is an string instead",
+    "line": 41
+  }
+]
