@@ -41,6 +41,10 @@ to choose which input to use:
   bottleneck in your application, don't [prematurely optimize](http://c2.com/cgi/wiki?PrematureOptimization) based
   on this fact.
 
+For byte-minimalists, you can `require('geojsonhint/object')` to get a version
+of this library that bypasses jsonlint-lines and provides only the object
+interface.
+
 ## use it
 
 as a library
