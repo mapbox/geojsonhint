@@ -1,3 +1,9 @@
+## 1.1.0
+
+* Adds purely object-based api, accessible via `require('geojsonhint/object')`.
+  This is useful for performance-intensive browser libraries.
+* Boosts code coverage testing to 100%
+
 ## 1.0.0
 
 * Declares the public API

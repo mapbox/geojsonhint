@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.png?branch=master)](http://travis-ci.org/mapbox/geojsonhint) [![Coverage Status](https://coveralls.io/repos/mapbox/geojsonhint/badge.svg)](https://coveralls.io/r/mapbox/geojsonhint)
+[![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.svg?branch=master)](http://travis-ci.org/mapbox/geojsonhint) [![Coverage Status](https://coveralls.io/repos/mapbox/geojsonhint/badge.svg)](https://coveralls.io/r/mapbox/geojsonhint)
 
 # geojsonhint: complete, fast, standards-based validation for geojson
 
