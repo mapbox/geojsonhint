@@ -12,7 +12,7 @@
   "dependencies": {
     "chalk": "^1.1.0",
     "concat-stream": "~1.4.4",
-    "jsonlint-lines": "~1.6.0",
+    "jsonlint-lines": "1.7.1",
     "minimist": "1.1.1",
     "text-table": "^0.2.0"
   },

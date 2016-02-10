@@ -1,0 +1,14 @@
+[
+  {
+    "message": "An object contained duplicate properties, making parsing ambigous: type",
+    "line": 1
+  },
+  {
+    "message": "\"properties\" property required",
+    "line": 1
+  },
+  {
+    "message": "\"geometry\" property required",
+    "line": 1
+  }
+]

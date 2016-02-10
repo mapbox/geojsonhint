@@ -1,13 +1,26 @@
 /**
  * @alias geojsonhint
  * @param {(string|object)} GeoJSON given as a string or as an object
+ * @param {Object} options
+ * @param {boolean} [options.noRepeatedProperties=true] forbid repeated
+ * properties. This is only available for string input, becaused parsed
+ * Objects cannot have duplicate properties.
  * @returns {Array<Object>} an array of errors
  */
-function hint(gj) {
+function hint(gj, options) {
 
     var errors = [];
 
     function root(_) {
+
+        if ((!options || options.noRepeatedProperties !== false) &&
+           _.__duplicateProperties__) {
+            errors.push({
+                message: 'An object contained duplicate properties, making parsing ambigous: ' + _.__duplicateProperties__.join(', '),
+                line: _.__line__
+            });
+        }
+
         if (!_.type) {
             errors.push({
                 message: 'The type property is required and was not found',
@@ -54,17 +67,17 @@ function hint(gj) {
     }
 
     // http://geojson.org/geojson-spec.html#feature-collection-objects
-    function FeatureCollection(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'features', 'array')) {
-            if (!everyIs(_.features, 'object')) {
+    function FeatureCollection(featureCollection) {
+        crs(featureCollection);
+        bbox(featureCollection);
+        if (!requiredProperty(featureCollection, 'features', 'array')) {
+            if (!everyIs(featureCollection.features, 'object')) {
                 return errors.push({
                     message: 'Every feature must be an object',
-                    line: _.__line__
+                    line: featureCollection.__line__
                 });
             }
-            _.features.forEach(Feature);
+            featureCollection.features.forEach(Feature);
         }
     }
 
@@ -175,92 +188,92 @@ function hint(gj) {
     }
 
     // http://geojson.org/geojson-spec.html#point
-    function Point(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            position(_.coordinates);
+    function Point(point) {
+        crs(point);
+        bbox(point);
+        if (!requiredProperty(point, 'coordinates', 'array')) {
+            position(point.coordinates);
         }
     }
 
     // http://geojson.org/geojson-spec.html#polygon
-    function Polygon(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 'LinearRing', 2);
+    function Polygon(polygon) {
+        crs(polygon);
+        bbox(polygon);
+        if (!requiredProperty(polygon, 'coordinates', 'array')) {
+            positionArray(polygon.coordinates, 'LinearRing', 2);
         }
     }
 
     // http://geojson.org/geojson-spec.html#multipolygon
-    function MultiPolygon(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 'LinearRing', 3);
+    function MultiPolygon(multiPolygon) {
+        crs(multiPolygon);
+        bbox(multiPolygon);
+        if (!requiredProperty(multiPolygon, 'coordinates', 'array')) {
+            positionArray(multiPolygon.coordinates, 'LinearRing', 3);
         }
     }
 
     // http://geojson.org/geojson-spec.html#linestring
-    function LineString(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 'Line', 1);
+    function LineString(lineString) {
+        crs(lineString);
+        bbox(lineString);
+        if (!requiredProperty(lineString, 'coordinates', 'array')) {
+            positionArray(lineString.coordinates, 'Line', 1);
         }
     }
 
     // http://geojson.org/geojson-spec.html#multilinestring
-    function MultiLineString(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, 'Line', 2);
+    function MultiLineString(multiLineString) {
+        crs(multiLineString);
+        bbox(multiLineString);
+        if (!requiredProperty(multiLineString, 'coordinates', 'array')) {
+            positionArray(multiLineString.coordinates, 'Line', 2);
         }
     }
 
     // http://geojson.org/geojson-spec.html#multipoint
-    function MultiPoint(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'coordinates', 'array')) {
-            positionArray(_.coordinates, '', 1);
+    function MultiPoint(multiPoint) {
+        crs(multiPoint);
+        bbox(multiPoint);
+        if (!requiredProperty(multiPoint, 'coordinates', 'array')) {
+            positionArray(multiPoint.coordinates, '', 1);
         }
     }
 
-    function GeometryCollection(_) {
-        crs(_);
-        bbox(_);
-        if (!requiredProperty(_, 'geometries', 'array')) {
-            _.geometries.forEach(function(geometry) {
+    function GeometryCollection(geometryCollection) {
+        crs(geometryCollection);
+        bbox(geometryCollection);
+        if (!requiredProperty(geometryCollection, 'geometries', 'array')) {
+            geometryCollection.geometries.forEach(function(geometry) {
                 if (geometry) root(geometry);
             });
         }
     }
 
-    function Feature(_) {
-        crs(_);
-        bbox(_);
+    function Feature(feature) {
+        crs(feature);
+        bbox(feature);
         // https://github.com/geojson/draft-geojson/blob/master/middle.mkd#feature-object
-        if (_.id !== undefined &&
-            typeof _.id !== 'string' &&
-            typeof _.id !== 'number') {
+        if (feature.id !== undefined &&
+            typeof feature.id !== 'string' &&
+            typeof feature.id !== 'number') {
             errors.push({
                 message: 'Feature "id" property must have a string or number value',
-                line: _.__line__
+                line: feature.__line__
             });
         }
-        if (_.type !== 'Feature') {
+        if (feature.type !== 'Feature') {
             errors.push({
                 message: 'GeoJSON features must have a type=feature property',
-                line: _.__line__
+                line: feature.__line__
             });
         }
-        requiredProperty(_, 'properties', 'object');
-        if (!requiredProperty(_, 'geometry', 'object')) {
+        requiredProperty(feature, 'properties', 'object');
+        if (!requiredProperty(feature, 'geometry', 'object')) {
             // http://geojson.org/geojson-spec.html#feature-objects
             // tolerate null geometry
-            if (_.geometry) root(_.geometry);
+            if (feature.geometry) root(feature.geometry);
         }
     }
 

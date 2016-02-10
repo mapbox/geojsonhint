@@ -4,9 +4,13 @@ var jsonlint = require('jsonlint-lines'),
 /**
  * @alias geojsonhint
  * @param {(string|object)} GeoJSON given as a string or as an object
+ * @param {Object} options
+ * @param {boolean} [options.noRepeatedProperties=true] forbid repeated
+ * properties. This is only available for string input, becaused parsed
+ * Objects cannot have duplicate properties.
  * @returns {Array<Object>} an array of errors
  */
-function hint(str) {
+function hint(str, options) {
 
     var gj, errors = [];
 
@@ -32,7 +36,7 @@ function hint(str) {
         }];
     }
 
-    errors = errors.concat(geojsonHintObject.hint(gj));
+    errors = errors.concat(geojsonHintObject.hint(gj, options));
 
     return errors;
 }

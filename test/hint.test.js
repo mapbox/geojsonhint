@@ -46,6 +46,21 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
+    test('noRepeatedProperties option=false', function(t) {
+        t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
+            noRepeatedProperties: false
+        }), [], 'sketchy object permitted');
+        t.end();
+    });
+    test('noRepeatedProperties option=true', function(t) {
+        t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
+            noRepeatedProperties: true
+        }), [{
+          "line": 1,
+          "message": "An object contained duplicate properties, making parsing ambigous: type"
+        }], 'sketchy object not permitted by default');
+        t.end();
+    });
     test('invalid roots', function(t) {
         t.deepEqual(geojsonhint.hint('null'), [{
             message: 'The root of a GeoJSON object must be an object.',
