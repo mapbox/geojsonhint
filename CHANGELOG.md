@@ -1,3 +1,9 @@
+## 1.2.0
+
+* Introduces a new option, `noRepeatedProperties`, and a stricter default
+  behavior: repeated properties, which are ambiguous in JSON, are now forbidden
+  by default with geojsonhint.
+
 ## 1.1.0
 
 * Adds purely object-based api, accessible via `require('geojsonhint/object')`.
