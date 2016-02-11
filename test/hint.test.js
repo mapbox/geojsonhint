@@ -57,7 +57,7 @@ test('geojsonhint', function(t) {
             noDuplicateMembers: true
         }), [{
           "line": 1,
-          "message": "An object contained duplicate properties, making parsing ambigous: type"
+          "message": "An object contained duplicate members, making parsing ambigous: type"
         }], 'sketchy object not permitted by default');
         t.end();
     });
