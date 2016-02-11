@@ -46,15 +46,15 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
-    test('noRepeatedProperties option=false', function(t) {
+    test('noDuplicateMembers option=false', function(t) {
         t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
-            noRepeatedProperties: false
+            noDuplicateMembers: false
         }), [], 'sketchy object permitted');
         t.end();
     });
-    test('noRepeatedProperties option=true', function(t) {
+    test('noDuplicateMembers option=true', function(t) {
         t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
-            noRepeatedProperties: true
+            noDuplicateMembers: true
         }), [{
           "line": 1,
           "message": "An object contained duplicate properties, making parsing ambigous: type"

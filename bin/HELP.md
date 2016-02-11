@@ -10,6 +10,6 @@ options:
 
   options are pretty, json, compact. pretty is the default.
 
---noRepeatedProperties
+--noDuplicateMembers
 
   if set to false, geojsonhint will permit repeated properties.

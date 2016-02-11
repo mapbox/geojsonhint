@@ -1,6 +1,6 @@
 ## 1.2.0
 
-* Introduces a new option, `noRepeatedProperties`, and a stricter default
+* Introduces a new option, `noDuplicateMembers`, and a stricter default
   behavior: repeated properties, which are ambiguous in JSON, are now forbidden
   by default with geojsonhint.
 

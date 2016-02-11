@@ -33,7 +33,7 @@ function pluralize(word, count) {
 function hint(input) {
 
     var options = {
-      noRepeatedProperties: argv.noRepeatedProperties !== 'false'
+      noDuplicateMembers: argv.noDuplicateMembers !== 'false'
     };
 
     var errors = geojsonhint.hint(input.toString(), options);
