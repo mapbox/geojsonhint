@@ -17,7 +17,7 @@ the ietf-candidate version of GeoJSON, is more precise (for instance, [the id pr
 
 ## API
 
-`errors = geojsonhint.hint(string or object)`
+`errors = geojsonhint.hint(string or object, options)`
 
 Lint a file, given as a string or object. This call detects all aberrations from
 the GeoJSON standards and returns them as an array of errors. An example of the output:
@@ -28,6 +28,19 @@ the GeoJSON standards and returns them as an array of errors. An example of the 
   "line": 1
 }]
 ```
+
+The options argument is optional and has one option: `noRepeatedProperties`.
+By default, geojsonhint will treat repeated properties as an error: you can
+set noRepeatedProperties to false to allow them. For instance:
+
+```js
+geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
+    noRepeatedProperties: false
+});
+```
+
+The repeated `type` property in this input will be ignored with the option,
+and flagged without it.
 
 ## Line Numbers
 

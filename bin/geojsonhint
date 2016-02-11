@@ -15,7 +15,7 @@ if (process.stdin.isTTY && !argv._[0]) {
 
 var filename;
 if (argv._[0]) {
-  filename = argv._[0];
+    filename = argv._[0];
 }
 
 (filename ? fs.createReadStream(filename) : process.stdin).pipe(concat(hint));
@@ -32,7 +32,11 @@ function pluralize(word, count) {
 
 function hint(input) {
 
-    var errors = geojsonhint.hint(input.toString());
+    var options = {
+      noRepeatedProperties: argv.noRepeatedProperties !== 'false'
+    };
+
+    var errors = geojsonhint.hint(input.toString(), options);
 
     if (!errors || !errors.length) {
         process.exit(0);
