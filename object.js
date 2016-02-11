@@ -2,7 +2,7 @@
  * @alias geojsonhint
  * @param {(string|object)} GeoJSON given as a string or as an object
  * @param {Object} options
- * @param {boolean} [options.noRepeatedProperties=true] forbid repeated
+ * @param {boolean} [options.noDuplicateMembers=true] forbid repeated
  * properties. This is only available for string input, becaused parsed
  * Objects cannot have duplicate properties.
  * @returns {Array<Object>} an array of errors
@@ -13,10 +13,10 @@ function hint(gj, options) {
 
     function root(_) {
 
-        if ((!options || options.noRepeatedProperties !== false) &&
+        if ((!options || options.noDuplicateMembers !== false) &&
            _.__duplicateProperties__) {
             errors.push({
-                message: 'An object contained duplicate properties, making parsing ambigous: ' + _.__duplicateProperties__.join(', '),
+                message: 'An object contained duplicate members, making parsing ambigous: ' + _.__duplicateProperties__.join(', '),
                 line: _.__line__
             });
         }

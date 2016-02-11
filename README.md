@@ -29,13 +29,13 @@ the GeoJSON standards and returns them as an array of errors. An example of the 
 }]
 ```
 
-The options argument is optional and has one option: `noRepeatedProperties`.
+The options argument is optional and has one option: `noDuplicateMembers`.
 By default, geojsonhint will treat repeated properties as an error: you can
-set noRepeatedProperties to false to allow them. For instance:
+set noDuplicateMembers to false to allow them. For instance:
 
 ```js
 geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
-    noRepeatedProperties: false
+    noDuplicateMembers: false
 });
 ```
 
