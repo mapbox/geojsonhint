@@ -4,6 +4,10 @@
     "line": 1
   },
   {
+    "message": "Feature object cannot contain features or coordinates",
+    "line": 1
+  },
+  {
     "message": "\"properties\" property required",
     "line": 1
   },
