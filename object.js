@@ -27,11 +27,18 @@ function hint(gj, options) {
                 line: _.__line__
             });
         } else if (!types[_.type]) {
-            errors.push({
-                message: 'The type ' + _.type + ' is unknown',
-                line: _.__line__
-            });
-        } else {
+            if (typesLower.indexOf(_.type.toLowerCase()) > -1) {
+                errors.push({
+                    message: 'GeoJSON types are case sensitive',
+                    line: _.__line__
+                });
+            } else {
+                errors.push({
+                    message: 'The type ' + _.type + ' is unknown',
+                    line: _.__line__
+                });
+            }
+        } else if (_) {
             types[_.type](_);
         }
     }
@@ -70,6 +77,13 @@ function hint(gj, options) {
     function FeatureCollection(featureCollection) {
         crs(featureCollection);
         bbox(featureCollection);
+        if (featureCollection.properties !== undefined ||
+            featureCollection.coordinates !== undefined) {
+            errors.push({
+                message: 'FeatureCollection object cannot contain properties or coordinates',
+                line: featureCollection.__line__
+            });
+        }
         if (!requiredProperty(featureCollection, 'features', 'array')) {
             if (!everyIs(featureCollection.features, 'object')) {
                 return errors.push({
@@ -96,11 +110,38 @@ function hint(gj, options) {
                     line: _.__line__ || line
                 });
             }
+            if (_.length > 3) {
+                return errors.push({
+                    message: 'position should not have more than 3 elements',
+                    line: _.__line__ || line
+                });
+            }
             if (!everyIs(_, 'number')) {
                 return errors.push({
                     message: 'each element in a position must be a number',
                     line: _.__line__ || line
                 });
+            }
+
+            // This is an arbitrary threshold roughly corresponding to
+            // the upper limit of survey-grade GPS precision in CRS84
+            // anything more and we're into microscopy
+            var maxPrecision = 9;
+            var num;
+			for (var i = 0; i < _.length; i++) {
+                num = _[i];
+                // TODO there has got to be a better way. Check original text?
+                // By this point number has already been parsed to a float...
+                var precision = 0;
+                var decimalStr = (num + "").split(".")[1]
+                if (decimalStr !== undefined)
+                    precision = decimalStr.length;
+                if (precision > maxPrecision) {
+                    return errors.push({
+                        message: "precision of coordinates should be reduced",
+                        line: _.__line__ || line
+                    });
+                }
             }
         }
     }
@@ -115,10 +156,11 @@ function hint(gj, options) {
             if (depth === 1 && type) {
                 if (type === 'LinearRing') {
                     if (!Array.isArray(coords[coords.length - 1])) {
-                        return errors.push({
+                        errors.push({
                             message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
                             line: line
                         });
+                        return true;
                     }
                     if (coords.length < 4) {
                         errors.push({
@@ -129,7 +171,7 @@ function hint(gj, options) {
                     if (coords.length &&
                         (coords[coords.length - 1].length !== coords[0].length ||
                         !coords[coords.length - 1].every(function(position, index) {
-                        return coords[0][index] === position;
+                            return coords[0][index] === position;
                     }))) {
                         errors.push({
                             message: 'the first and last positions in a LinearRing of coordinates must be the same',
@@ -137,7 +179,7 @@ function hint(gj, options) {
                         });
                     }
                 } else if (type === 'Line' && coords.length < 2) {
-                    errors.push({
+                    return errors.push({
                         message: 'a line needs to have two or more coordinates to be valid',
                         line: line
                     });
@@ -155,27 +197,76 @@ function hint(gj, options) {
         }
     }
 
+
+	function rightHandRule (geometry) {
+		var rhr = true;
+		if (geometry.type == 'Polygon') {
+			rhr = isPolyRHR(geometry.coordinates);
+		} else if (geometry.type == 'MultiPolygon') {
+			for (var i = 0; i < geometry.coordinates.length; i++) {
+				if (!isPolyRHR(geometry.coordinates[i])) {
+                    rhr = false;
+					break;
+				}
+			}
+		}
+		if (!rhr) {
+			errors.push({
+				message: 'Polygons and MultiPolygons should follow the right-hand rule',
+				line: geometry.__line__
+			});
+		}
+	};
+
+	function isPolyRHR (coords) {
+		if (coords && coords.length > 0) {
+            if (!isRingClockwise(coords[0]))
+                return false;
+			for (var i = 1; i < coords.length; i++) {
+                if (isRingClockwise(coords[i]))
+                    return false;
+			}
+		}
+        return true;
+	};
+
+	function isRingClockwise (coords) {
+		var area = 0;
+		if (coords.length > 2) {
+			var p1, p2;
+			for (var i = 0; i < coords.length - 1; i++) {
+				p1 = coords[i];
+				p2 = coords[i + 1];
+				area += rad(p2[0] - p1[0]) * (2 + Math.sin(rad(p1[1])) + Math.sin(rad(p2[1])));
+			}
+		}
+
+		if (area >= 0)
+            return true;
+		else
+            return false;
+	};
+
+	function rad(x) {
+		return x * Math.PI / 180;
+	}
+
     function crs(_) {
         if (!_.crs) return;
-        if (typeof _.crs === 'object') {
-            var strErr = requiredProperty(_.crs, 'type', 'string'),
-                propErr = requiredProperty(_.crs, 'properties', 'object');
-            if (!strErr && !propErr) {
-                // http://geojson.org/geojson-spec.html#named-crs
-                if (_.crs.type === 'name') {
-                    requiredProperty(_.crs.properties, 'name', 'string');
-                } else if (_.crs.type === 'link') {
-                    requiredProperty(_.crs.properties, 'href', 'string');
-                } else {
-                    errors.push({
-                        message: 'The type of a crs must be either "name" or "link"',
-                        line: _.__line__
-                    });
-                }
-            }
+        var defaultCRS = {
+            "type": "name",
+            "properties": {
+              "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+              }
+        }
+        if (typeof _.crs === 'object' && _.crs.properties && _.crs.properties.name == defaultCRS.properties.name) {
+            errors.push({
+                message: "crs is not a valid GeoJSON type, this object is equivalent to the default and should be removed",
+                line: _.__line__
+            });
         } else {
             errors.push({
-                message: 'the value of the crs property must be an object, not a ' + (typeof _.crs),
+                message: "crs is not a valid GeoJSON type",
                 line: _.__line__
             });
         }
@@ -185,11 +276,18 @@ function hint(gj, options) {
         if (!_.bbox) { return; }
         if (Array.isArray(_.bbox)) {
             if (!everyIs(_.bbox, 'number')) {
-                return errors.push({
+                errors.push({
                     message: 'each element in a bbox property must be a number',
                     line: _.bbox.__line__
                 });
             }
+            if (!(_.bbox.length == 4 || _.bbox.length == 6)) {
+                errors.push({
+                    message: 'bbox must contain 4 elements (for 2D) or 6 elements (for 3D)',
+                    line: _.bbox.__line__
+                });
+            }
+            return errors.length
         } else {
             errors.push({
                 message: 'bbox property must be an array of numbers, but is a ' + (typeof _.bbox),
@@ -198,10 +296,22 @@ function hint(gj, options) {
         }
     }
 
+    function geometrySemantics(geom) {
+        if (geom.properties !== undefined ||
+            geom.geometry !== undefined ||
+            geom.features !== undefined) {
+            errors.push({
+                message: 'geometry object cannot contain features, geometry or properties',
+                line: geom.__line__
+            });
+        }
+    }
+
     // http://geojson.org/geojson-spec.html#point
     function Point(point) {
         crs(point);
         bbox(point);
+        geometrySemantics(point);
         if (!requiredProperty(point, 'coordinates', 'array')) {
             position(point.coordinates);
         }
@@ -212,7 +322,9 @@ function hint(gj, options) {
         crs(polygon);
         bbox(polygon);
         if (!requiredProperty(polygon, 'coordinates', 'array')) {
-            positionArray(polygon.coordinates, 'LinearRing', 2);
+            if (!positionArray(polygon.coordinates, 'LinearRing', 2)) {
+                rightHandRule(polygon);
+            }
         }
     }
 
@@ -221,7 +333,9 @@ function hint(gj, options) {
         crs(multiPolygon);
         bbox(multiPolygon);
         if (!requiredProperty(multiPolygon, 'coordinates', 'array')) {
-            positionArray(multiPolygon.coordinates, 'LinearRing', 3);
+            if (!positionArray(multiPolygon.coordinates, 'LinearRing', 3)) {
+                rightHandRule(multiPolygon);
+            }
         }
     }
 
@@ -262,8 +376,22 @@ function hint(gj, options) {
                     line: geometryCollection.__line__
                 });
             }
+            if (geometryCollection.geometries.length == 1) {
+                errors.push({
+                    message: 'GeometryCollection with a single geometry should be avoided in favor of single part or a single object of multi-part type',
+                    line: geometryCollection.geometries.__line__
+                });
+            }
             geometryCollection.geometries.forEach(function(geometry) {
-                if (geometry) root(geometry);
+                if (geometry) {
+                    if (geometry.type === "GeometryCollection") {
+                        errors.push({
+                            message: "GeometryCollection should avoid nested geometry collections",
+                            line: geometryCollection.geometries.__line__
+                        });
+                    }
+                    root(geometry);
+                }
             });
         }
     }
@@ -277,6 +405,12 @@ function hint(gj, options) {
             typeof feature.id !== 'number') {
             errors.push({
                 message: 'Feature "id" property must have a string or number value',
+                line: feature.__line__
+            });
+        }
+        if (feature.features !== undefined || feature.coordinates !== undefined) {
+            errors.push({
+                message: 'Feature object cannot contain features or coordinates',
                 line: feature.__line__
             });
         }
@@ -305,6 +439,18 @@ function hint(gj, options) {
         Polygon: Polygon,
         MultiPolygon: MultiPolygon
     };
+
+    function propertiesLowerCase(obj) {
+        var props = [];
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                props.push(prop.toLowerCase());
+            }
+        }
+        return props;
+    }
+
+    var typesLower = propertiesLowerCase(types);
 
     if (typeof gj !== 'object' ||
         gj === null ||

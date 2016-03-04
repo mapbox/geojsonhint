@@ -1,12 +1,12 @@
-{ "type": "FeatureCollection",
+{ "type": "featurecollection",
   "features": [
-    { "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+    { "type": "feature",
+      "geometry": {"type": "point", "coordinates": [102.0, 0.5]},
       "properties": {"prop0": "value0"}
       },
-    { "type": "Feature",
+    { "type": "feature",
       "geometry": {
-        "type": "LineString",
+        "type": "linestring",
         "coordinates": [
           [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
           ]
@@ -16,11 +16,12 @@
         "prop1": 0.0
         }
       },
-    { "type": "Feature",
+    { "type": "feature",
        "geometry": {
-         "type": "Polygon",
+         "type": "polygon",
          "coordinates": [
-           [ [100.0, 0.0], [100.0, 1.0], [101.0, 1.0], [101.0, 0.0], [100.0, 0.0] ]
+           [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+             [100.0, 1.0], [100.0, 0.0] ]
            ]
        },
        "properties": {

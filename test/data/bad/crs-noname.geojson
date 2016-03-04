@@ -1,8 +1,0 @@
-{
-    "crs": {
-        "type": "name",
-        "properties": {}
-    },
-    "type": "Point",
-    "coordinates": [2, 2]
-}
