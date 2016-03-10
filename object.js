@@ -128,7 +128,7 @@ function hint(gj, options) {
             // anything more and we're into microscopy
             var maxPrecision = 9;
             var num;
-			for (var i = 0; i < _.length; i++) {
+            for (var i = 0; i < _.length; i++) {
                 num = _[i];
                 // TODO there has got to be a better way. Check original text?
                 // By this point number has already been parsed to a float...
@@ -192,58 +192,58 @@ function hint(gj, options) {
     }
 
 
-	function rightHandRule (geometry) {
-		var rhr = true;
-		if (geometry.type == 'Polygon') {
-			rhr = isPolyRHR(geometry.coordinates);
-		} else if (geometry.type == 'MultiPolygon') {
-			for (var i = 0; i < geometry.coordinates.length; i++) {
-				if (!isPolyRHR(geometry.coordinates[i])) {
+    function rightHandRule (geometry) {
+        var rhr = true;
+        if (geometry.type == 'Polygon') {
+            rhr = isPolyRHR(geometry.coordinates);
+        } else if (geometry.type == 'MultiPolygon') {
+            for (var i = 0; i < geometry.coordinates.length; i++) {
+                if (!isPolyRHR(geometry.coordinates[i])) {
                     rhr = false;
-					break;
-				}
-			}
-		}
-		if (!rhr) {
-			errors.push({
-				message: 'Polygons and MultiPolygons should follow the right-hand rule',
-				line: geometry.__line__
-			});
-		}
-	};
+                    break;
+                }
+            }
+        }
+        if (!rhr) {
+            errors.push({
+                message: 'Polygons and MultiPolygons should follow the right-hand rule',
+                line: geometry.__line__
+            });
+        }
+    };
 
-	function isPolyRHR (coords) {
-		if (coords && coords.length > 0) {
+    function isPolyRHR (coords) {
+        if (coords && coords.length > 0) {
             if (!isRingClockwise(coords[0]))
                 return false;
-			for (var i = 1; i < coords.length; i++) {
+            for (var i = 1; i < coords.length; i++) {
                 if (isRingClockwise(coords[i]))
                     return false;
-			}
-		}
+            }
+        }
         return true;
-	};
+    };
 
-	function isRingClockwise (coords) {
-		var area = 0;
-		if (coords.length > 2) {
-			var p1, p2;
-			for (var i = 0; i < coords.length - 1; i++) {
-				p1 = coords[i];
-				p2 = coords[i + 1];
-				area += rad(p2[0] - p1[0]) * (2 + Math.sin(rad(p1[1])) + Math.sin(rad(p2[1])));
-			}
-		}
+    function isRingClockwise (coords) {
+        var area = 0;
+        if (coords.length > 2) {
+            var p1, p2;
+            for (var i = 0; i < coords.length - 1; i++) {
+                p1 = coords[i];
+                p2 = coords[i + 1];
+                area += rad(p2[0] - p1[0]) * (2 + Math.sin(rad(p1[1])) + Math.sin(rad(p2[1])));
+            }
+        }
 
-		if (area >= 0)
+        if (area >= 0)
             return true;
-		else
+        else
             return false;
-	};
+    };
 
-	function rad(x) {
-		return x * Math.PI / 180;
-	}
+    function rad(x) {
+        return x * Math.PI / 180;
+    }
 
     function crs(_) {
         if (!_.crs) return;
