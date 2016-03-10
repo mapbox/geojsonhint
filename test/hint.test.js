@@ -35,17 +35,17 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
-    // test('validates incorrect files as objects', function(t) {
-    //     glob.sync('test/data/bad/*.geojson').forEach(function(f) {
-    //         if (f === 'test/data/bad/bad-json.geojson') return;
-    //         var gj = filejs(f);
-    //         if (process.env.UPDATE) {
-    //             fs.writeFileSync(f.replace('geojson', 'result-object'), JSON.stringify(geojsonhint.hint(gj), null, 2));
-    //         }
-    //         t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result-object')), f);
-    //     });
-    //     t.end();
-    // });
+    test('validates incorrect files as objects', function(t) {
+        glob.sync('test/data/bad/*.geojson').forEach(function(f) {
+            if (f === 'test/data/bad/bad-json.geojson') return;
+            var gj = filejs(f);
+            if (process.env.UPDATE) {
+                fs.writeFileSync(f.replace('geojson', 'result-object'), JSON.stringify(geojsonhint.hint(gj), null, 2));
+            }
+            t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result-object')), f);
+        });
+        t.end();
+    });
     test('noDuplicateMembers option=false', function(t) {
         t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
             noDuplicateMembers: false
