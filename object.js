@@ -27,9 +27,10 @@ function hint(gj, options) {
                 line: _.__line__
             });
         } else if (!types[_.type]) {
-            if (typesLower.indexOf(_.type.toLowerCase()) > -1) {
+            var expectedType = typesLower[_.type.toLowerCase()];
+            if (expectedType !== undefined) {
                 errors.push({
-                    message: 'GeoJSON types are case sensitive',
+                    message: 'Expected ' + expectedType + ' but got ' + _.type + ' (case sensitive)',
                     line: _.__line__
                 });
             } else {
@@ -77,10 +78,15 @@ function hint(gj, options) {
     function FeatureCollection(featureCollection) {
         crs(featureCollection);
         bbox(featureCollection);
-        if (featureCollection.properties !== undefined ||
-            featureCollection.coordinates !== undefined) {
+        if (featureCollection.properties !== undefined) {
             errors.push({
-                message: 'FeatureCollection object cannot contain properties or coordinates',
+                message: 'FeatureCollection object cannot contain a "properties" member',
+                line: featureCollection.__line__
+            });
+        }
+        if (featureCollection.coordinates !== undefined) {
+            errors.push({
+                message: 'FeatureCollection object cannot contain a "coordinates" member',
                 line: featureCollection.__line__
             });
         }
@@ -123,17 +129,14 @@ function hint(gj, options) {
                 });
             }
 
-            // This is an arbitrary threshold roughly corresponding to
-            // the upper limit of survey-grade GPS precision in CRS84
-            // anything more and we're into microscopy
-            var maxPrecision = 9;
+            var maxPrecision = 6;
             var num;
             for (var i = 0; i < _.length; i++) {
                 num = _[i];
                 // TODO there has got to be a better way. Check original text?
                 // By this point number has already been parsed to a float...
                 var precision = 0;
-                var decimalStr = (num + "").split(".")[1]
+                var decimalStr = (num + "").split(".")[1];
                 if (decimalStr !== undefined)
                     precision = decimalStr.length;
                 if (precision > maxPrecision) {
@@ -203,12 +206,8 @@ function hint(gj, options) {
         if (geometry.type == 'Polygon') {
             rhr = isPolyRHR(geometry.coordinates);
         } else if (geometry.type == 'MultiPolygon') {
-            for (var i = 0; i < geometry.coordinates.length; i++) {
-                if (!isPolyRHR(geometry.coordinates[i])) {
-                    rhr = false;
-                    break;
-                }
-            }
+            if (!geometry.coordinates.every(isPolyRHR))
+                rhr = false;
         }
         if (!rhr) {
             errors.push({
@@ -216,19 +215,18 @@ function hint(gj, options) {
                 line: geometry.__line__
             });
         }
-    };
+    }
 
     function isPolyRHR (coords) {
         if (coords && coords.length > 0) {
             if (!isRingClockwise(coords[0]))
                 return false;
-            for (var i = 1; i < coords.length; i++) {
-                if (isRingClockwise(coords[i]))
-                    return false;
-            }
+            var interiorCoords = coords.slice(1, coords.length);
+            if (interiorCoords.some(isRingClockwise))
+                return false;
         }
         return true;
-    };
+    }
 
     function isRingClockwise (coords) {
         var area = 0;
@@ -241,11 +239,8 @@ function hint(gj, options) {
             }
         }
 
-        if (area >= 0)
-            return true;
-        else
-            return false;
-    };
+        return area >= 0;
+    }
 
     function rad(x) {
         return x * Math.PI / 180;
@@ -253,20 +248,15 @@ function hint(gj, options) {
 
     function crs(_) {
         if (!_.crs) return;
-        var defaultCRS = {
-            "type": "name",
-            "properties": {
-              "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-              }
-        }
-        if (typeof _.crs === 'object' && _.crs.properties && _.crs.properties.name == defaultCRS.properties.name) {
+        var defaultCRSName = "urn:ogc:def:crs:OGC:1.3:CRS84";
+        if (typeof _.crs === 'object' && _.crs.properties && _.crs.properties.name === defaultCRSName) {
             errors.push({
-                message: "crs is not a valid GeoJSON type, this object is equivalent to the default and should be removed",
+                message: "old-style crs member is not recommended, this object is equivalent to the default and should be removed",
                 line: _.__line__
             });
         } else {
             errors.push({
-                message: "crs is not a valid GeoJSON type",
+                message: "old-style crs member is not recommended",
                 line: _.__line__
             });
         }
@@ -287,7 +277,7 @@ function hint(gj, options) {
                     line: _.bbox.__line__
                 });
             }
-            return errors.length
+            return errors.length;
         } else {
             errors.push({
                 message: 'bbox property must be an array of numbers, but is a ' + (typeof _.bbox),
@@ -297,11 +287,21 @@ function hint(gj, options) {
     }
 
     function geometrySemantics(geom) {
-        if (geom.properties !== undefined ||
-            geom.geometry !== undefined ||
-            geom.features !== undefined) {
+        if (geom.properties !== undefined) {
             errors.push({
-                message: 'geometry object cannot contain features, geometry or properties',
+                message: 'geometry object cannot contain a "properties" member',
+                line: geom.__line__
+            });
+        }
+        if (geom.geometry !== undefined) {
+            errors.push({
+                message: 'geometry object cannot contain a "geometry" member',
+                line: geom.__line__
+            });
+        }
+        if (geom.features !== undefined) {
+            errors.push({
+                message: 'geometry object cannot contain a "features" member',
                 line: geom.__line__
             });
         }
@@ -408,9 +408,15 @@ function hint(gj, options) {
                 line: feature.__line__
             });
         }
-        if (feature.features !== undefined || feature.coordinates !== undefined) {
+        if (feature.features !== undefined) {
             errors.push({
-                message: 'Feature object cannot contain features or coordinates',
+                message: 'Feature object cannot contain a "features" member',
+                line: feature.__line__
+            });
+        }
+        if (feature.coordinates !== undefined) {
+            errors.push({
+                message: 'Feature object cannot contain a "coordinates" member',
                 line: feature.__line__
             });
         }
@@ -440,17 +446,10 @@ function hint(gj, options) {
         MultiPolygon: MultiPolygon
     };
 
-    function propertiesLowerCase(obj) {
-        var props = [];
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                props.push(prop.toLowerCase());
-            }
-        }
-        return props;
-    }
-
-    var typesLower = propertiesLowerCase(types);
+    var typesLower = Object.keys(types).reduce(function(prev, curr) {
+        prev[curr.toLowerCase()] = curr;
+        return prev;
+    }, {});
 
     if (typeof gj !== 'object' ||
         gj === null ||

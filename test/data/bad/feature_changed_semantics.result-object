@@ -1,1 +1,8 @@
-[{"message":"Feature object cannot contain features or coordinates"}]
+[
+  {
+    "message": "Feature object cannot contain a \"features\" member"
+  },
+  {
+    "message": "Feature object cannot contain a \"coordinates\" member"
+  }
+]

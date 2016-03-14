@@ -1,1 +1,1 @@
-[{"message":"GeoJSON types are case sensitive","line":1}]
+[{"message":"Expected FeatureCollection but got featurecollection (case sensitive)","line":1}]
