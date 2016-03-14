@@ -1,1 +1,12 @@
-[{"message":"geometry object cannot contain features, geometry or properties"}]
+[
+  {
+    "message": "geometry object cannot contain a \"properties\" member"
+  },
+  {
+    "message": "geometry object cannot contain a \"geometry\" member"
+  },
+  {
+    "message": "geometry object cannot contain a \"features\" member"
+  }
+]
+

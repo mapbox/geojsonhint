@@ -4,7 +4,7 @@
     "line": 1
   },
   {
-    "message": "Feature object cannot contain features or coordinates",
+    "message": "Feature object cannot contain a \"features\" member",
     "line": 1
   },
   {

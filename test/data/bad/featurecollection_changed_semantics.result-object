@@ -1,1 +1,8 @@
-[{"message":"FeatureCollection object cannot contain properties or coordinates"}]
+[
+  {
+    "message": "FeatureCollection object cannot contain a \"properties\" member"
+  },
+  {
+    "message": "FeatureCollection object cannot contain a \"coordinates\" member"
+  }
+]

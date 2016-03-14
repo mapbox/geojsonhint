@@ -1,6 +1,6 @@
 [
   {
-    "message": "Feature object cannot contain features or coordinates"
+    "message": "Feature object cannot contain a \"features\" member"
   },
   {
     "message": "\"properties\" property required"
