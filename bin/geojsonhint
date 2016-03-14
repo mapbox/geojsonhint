@@ -55,14 +55,28 @@ function hint(input) {
             console.log(chalk.red('invalid JSON'));
             throw errors;
         }
+        var nWarnings = 0;
+        var nErrors = 0;
         var output = table(errors.map(function(e) {
-          return [
-            e.line + ':',
-            chalk.red(e.message)
-          ];
+          if (e.level === "warn") {
+            nWarnings += 1;
+            return [
+              e.line + ':',
+              chalk.yellow(e.message)
+            ];
+          } else {
+            // Assume "error" level by default
+            nErrors += 1;
+            return [
+              e.line + ':',
+              chalk.red(e.message)
+            ];
+          }
         }), {
           align: ['r', 'l']
-        }) + '\n\n' + errors.length + ' ' + pluralize('error', errors.length);
+        })
+        output += '\n\n' + nErrors + ' ' + chalk.red(pluralize('error', nErrors));
+        output += '\n' + nWarnings + ' ' + chalk.yellow(pluralize('warning', nWarnings));
         console.log(output);
     } else if (format === 'compact') {
         if (errors instanceof Error) {
@@ -70,8 +84,10 @@ function hint(input) {
             throw errors;
         }
         var filePart = filename ? filename + ': ' : '';
+        var level;
         errors.forEach(function(e) {
-          console.log(filePart + 'line ' + e.line + ' - ' + e.message);
+          level = e.level ? e.level : "error";
+          console.log(filePart + 'line ' + e.line + ' - ' + e.message + " - " + level);
         });
     } else {
         throw new Error('Format unknown');

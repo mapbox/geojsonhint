@@ -142,6 +142,7 @@ function hint(gj, options) {
                 if (precision > maxPrecision) {
                     return errors.push({
                         message: "precision of coordinates should be reduced",
+                        level: "warn",
                         line: _.__line__ || line
                     });
                 }
@@ -206,6 +207,7 @@ function hint(gj, options) {
         if (!rhr) {
             errors.push({
                 message: 'Polygons and MultiPolygons should follow the right-hand rule',
+                level: 'warn',
                 line: geometry.__line__
             });
         }
@@ -246,11 +248,13 @@ function hint(gj, options) {
         if (typeof _.crs === 'object' && _.crs.properties && _.crs.properties.name === defaultCRSName) {
             errors.push({
                 message: "old-style crs member is not recommended, this object is equivalent to the default and should be removed",
+                level: "warn",
                 line: _.__line__
             });
         } else {
             errors.push({
                 message: "old-style crs member is not recommended",
+                level: "warn",
                 line: _.__line__
             });
         }
@@ -367,6 +371,7 @@ function hint(gj, options) {
             if (geometryCollection.geometries.length == 1) {
                 errors.push({
                     message: 'GeometryCollection with a single geometry should be avoided in favor of single part or a single object of multi-part type',
+                    level: 'warn',
                     line: geometryCollection.geometries.__line__
                 });
             }
@@ -375,6 +380,7 @@ function hint(gj, options) {
                     if (geometry.type === "GeometryCollection") {
                         errors.push({
                             message: "GeometryCollection should avoid nested geometry collections",
+                            level: 'warn',
                             line: geometryCollection.geometries.__line__
                         });
                     }
