@@ -10,6 +10,7 @@
 function hint(gj, options) {
 
     var errors = [];
+    var precisionWarningCount = 0;
 
     function root(_) {
 
@@ -129,23 +130,34 @@ function hint(gj, options) {
                 });
             }
 
+            var maxPrecisionWarnings = 10;
             var maxPrecision = 6;
             var num;
-            for (var i = 0; i < _.length; i++) {
-                num = _[i];
-                // TODO there has got to be a better way. Check original text?
-                // By this point number has already been parsed to a float...
-                var precision = 0;
-                var decimalStr = (num + "").split(".")[1];
-                if (decimalStr !== undefined)
-                    precision = decimalStr.length;
-                if (precision > maxPrecision) {
-                    return errors.push({
-                        message: "precision of coordinates should be reduced",
-                        level: "warn",
-                        line: _.__line__ || line
-                    });
-                }
+            if (precisionWarningCount == maxPrecisionWarnings) {
+                precisionWarningCount += 1;
+                return errors.push({
+                    message: "truncated warnings: we've encountered coordinate precision warning " + maxPrecisionWarnings + " times, no more warnings will be reported",
+                    level: "warn",
+                    line: _.__line__ || line
+                });
+            } else if (precisionWarningCount < maxPrecisionWarnings) {
+                _.forEach(function(num) {
+                    // TODO there has got to be a better way. Check original text?
+                    // By this point number has already been parsed to a float...
+                    var precision = 0;
+                    var decimalStr = (num + "").split(".")[1];
+                    if (decimalStr !== undefined)
+                        precision = decimalStr.length;
+                    if (precision > maxPrecision) {
+                        precisionWarningCount += 1;
+                        return errors.push({
+                            message: "precision of coordinates should be reduced",
+                            level: "warn",
+                            line: _.__line__ || line
+                        });
+                    }
+
+                });
             }
         }
     }
