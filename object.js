@@ -142,10 +142,16 @@ function hint(gj, options) {
                         line: line
                     });
                 }
+            } else if (!Array.isArray(coords)) {
+                errors.push({
+                    message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
+                    line: line
+                });
+            } else {
+                coords.forEach(function(c) {
+                    positionArray(c, type, depth - 1, c.__line__ || line);
+                });
             }
-            coords.forEach(function(c) {
-                positionArray(c, type, depth - 1, c.__line__ || line);
-            });
         }
     }
 
