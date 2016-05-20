@@ -105,3 +105,4 @@ Building the browser version:
 * [geojsonlint.com](http://geojsonlint.com/) does this server-side
 * [GeoJSON-Validation](https://github.com/craveprogramminginc/GeoJSON-Validation) is another node module for this.
 * [geojson-assert](https://github.com/calvinmetcalf/geojson-assert) does it in assertion tests
+* [geojsonlint](https://github.com/ropenscilabs/geojsonlint) does it in an R package
