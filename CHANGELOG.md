@@ -1,3 +1,9 @@
+## 1.2.1
+
+* Fixes a case where coordinate arrays that aren't nested deeply would trigger
+  an uncaught exception
+* Improves test coverage
+
 ## 1.2.0
 
 * Introduces a new option, `noDuplicateMembers`, and a stricter default
