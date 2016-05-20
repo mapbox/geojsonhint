@@ -31,7 +31,7 @@ function hint(gj, options) {
                 message: 'The type ' + _.type + ' is unknown',
                 line: _.__line__
             });
-        } else if (_) {
+        } else {
             types[_.type](_);
         }
     }
@@ -166,6 +166,11 @@ function hint(gj, options) {
                     requiredProperty(_.crs.properties, 'name', 'string');
                 } else if (_.crs.type === 'link') {
                     requiredProperty(_.crs.properties, 'href', 'string');
+                } else {
+                    errors.push({
+                        message: 'The type of a crs must be either "name" or "link"',
+                        line: _.__line__
+                    });
                 }
             }
         } else {
@@ -251,6 +256,12 @@ function hint(gj, options) {
         crs(geometryCollection);
         bbox(geometryCollection);
         if (!requiredProperty(geometryCollection, 'geometries', 'array')) {
+            if (!everyIs(geometryCollection.geometries, 'object')) {
+                errors.push({
+                    message: 'The geometries array in a GeometryCollection must contain only geometry objects',
+                    line: geometryCollection.__line__
+                });
+            }
             geometryCollection.geometries.forEach(function(geometry) {
                 if (geometry) root(geometry);
             });

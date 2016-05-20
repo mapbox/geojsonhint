@@ -1,0 +1,8 @@
+{
+  "type": "GeometryCollection",
+  "crs": {
+    "type": "unknown",
+    "properties": {}
+  },
+  "geometries": [false]
+}

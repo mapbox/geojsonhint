@@ -20,9 +20,8 @@ function hint(str, options) {
         try {
             gj = jsonlint.parse(str);
         } catch(e) {
-            var match = e.message.match(/line (\d+)/),
-                lineNumber = 0;
-            if (match) { lineNumber = parseInt(match[1], 10); }
+            var match = e.message.match(/line (\d+)/);
+            var lineNumber = parseInt(match[1], 10);
             return [{
                 line: lineNumber - 1,
                 message: e.message,

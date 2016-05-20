@@ -1,0 +1,5 @@
+[
+  {
+    "message": "The geometries array in a GeometryCollection must contain only geometry objects"
+  }
+]

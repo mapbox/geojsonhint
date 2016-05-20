@@ -947,6 +947,14 @@ function hint(gj, options) {
         crs(geometryCollection);
         bbox(geometryCollection);
         if (!requiredProperty(geometryCollection, 'geometries', 'array')) {
+            if (!everyIs(geometryCollection.features, 'object')) {
+                errors.push({
+                :qa
+
+                    message: 'The geometries array in a GeometryCollection must contain only geometry objects',
+                    line: geometryCollection.__line__
+                });
+            }
             geometryCollection.geometries.forEach(function(geometry) {
                 if (geometry) root(geometry);
             });
