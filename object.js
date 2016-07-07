@@ -200,7 +200,8 @@ function hint(gj, options) {
                         line: line
                     });
                 }
-            } else if (!Array.isArray(coords)) {
+            } 
+            if (!Array.isArray(coords)) {
                 errors.push({
                     message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
                     line: line
