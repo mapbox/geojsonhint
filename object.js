@@ -214,24 +214,6 @@ function hint(gj, options) {
         }
     }
 
-
-    function rightHandRule (geometry) {
-        var rhr = true;
-        if (geometry.type == 'Polygon') {
-            rhr = isPolyRHR(geometry.coordinates);
-        } else if (geometry.type == 'MultiPolygon') {
-            if (!geometry.coordinates.every(isPolyRHR))
-                rhr = false;
-        }
-        if (!rhr) {
-            errors.push({
-                message: 'Polygons and MultiPolygons should follow the right-hand rule',
-                level: 'warn',
-                line: geometry.__line__
-            });
-        }
-    }
-
     function rightHandRule (geometry) {
         var rhr = true;
         if (geometry.type == 'Polygon') {
