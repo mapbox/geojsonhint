@@ -1,1 +1,6 @@
-[{"message":"old-style crs member is not recommended","level":"warn"}]
+[
+  {
+    "message": "old-style crs member is not recommended",
+    "level": "warn"
+  }
+]

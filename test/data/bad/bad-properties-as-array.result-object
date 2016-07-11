@@ -1,0 +1,5 @@
+[
+  {
+    "message": "\"properties\" property should be object, but is an Array instead"
+  }
+]

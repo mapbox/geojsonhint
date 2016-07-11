@@ -1,1 +1,6 @@
-[{"message":"GeometryCollection should avoid nested geometry collections","level":"warn"}]
+[
+  {
+    "message": "GeometryCollection should avoid nested geometry collections",
+    "level": "warn"
+  }
+]

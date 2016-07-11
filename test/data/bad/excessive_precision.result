@@ -1,2 +1,12 @@
-[{"message":"precision of coordinates should be reduced","level":"warn","line":1},
- {"message":"precision of coordinates should be reduced","level":"warn","line":1}]
+[
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 1
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 1
+  }
+]

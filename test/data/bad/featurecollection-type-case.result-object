@@ -1,1 +1,5 @@
-[{"message":"Expected FeatureCollection but got featurecollection (case sensitive)"}]
+[
+  {
+    "message": "Expected FeatureCollection but got featurecollection (case sensitive)"
+  }
+]

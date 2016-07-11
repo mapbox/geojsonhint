@@ -1,6 +1,6 @@
 [
-{
-    "line": 1,
-    "message": "\"properties\" property should be object, but is an number instead"
-}
+  {
+    "message": "\"properties\" property should be object, but is an Number instead",
+    "line": 1
+  }
 ]

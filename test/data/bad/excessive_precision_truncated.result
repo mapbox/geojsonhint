@@ -1,12 +1,57 @@
-[{"message":"precision of coordinates should be reduced","level":"warn","line":2},
- {"message":"precision of coordinates should be reduced","level":"warn","line":2},
- {"message":"precision of coordinates should be reduced","level":"warn","line":3},
- {"message":"precision of coordinates should be reduced","level":"warn","line":3},
- {"message":"precision of coordinates should be reduced","level":"warn","line":4},
- {"message":"precision of coordinates should be reduced","level":"warn","line":4},
- {"message":"precision of coordinates should be reduced","level":"warn","line":5},
- {"message":"precision of coordinates should be reduced","level":"warn","line":5},
- {"message":"precision of coordinates should be reduced","level":"warn","line":6},
- {"message":"precision of coordinates should be reduced","level":"warn","line":6},
- {"message":"truncated warnings: we've encountered coordinate precision warning 10 times, no more warnings will be reported","line":7,"level":"warn"}
+[
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 2
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 2
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 3
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 3
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 4
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 4
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 5
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 5
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 6
+  },
+  {
+    "message": "precision of coordinates should be reduced",
+    "level": "warn",
+    "line": 6
+  },
+  {
+    "message": "truncated warnings: we've encountered coordinate precision warning 10 times, no more warnings will be reported",
+    "level": "warn",
+    "line": 7
+  }
 ]
