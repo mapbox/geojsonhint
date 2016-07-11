@@ -1,0 +1,4 @@
+test/data/bad/bbox-string.geojson
+        1:1  error    bbox member must be an array of numbers, but is a string
+
+✖ 1 error

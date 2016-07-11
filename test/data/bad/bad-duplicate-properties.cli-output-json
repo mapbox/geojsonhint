@@ -1,0 +1,18 @@
+[
+  {
+    "message": "An object contained duplicate members, making parsing ambigous: type",
+    "line": 1
+  },
+  {
+    "message": "Feature object cannot contain a \"features\" member",
+    "line": 1
+  },
+  {
+    "message": "\"properties\" member required",
+    "line": 1
+  },
+  {
+    "message": "\"geometry\" member required",
+    "line": 1
+  }
+]

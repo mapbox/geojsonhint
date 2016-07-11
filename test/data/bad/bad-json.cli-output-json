@@ -1,0 +1,27 @@
+[
+  {
+    "line": 1,
+    "message": "Parse error on line 2:\n...\": \"MultiPoint\"    \"coordinates\": [[\"fo\n----------------------^\nExpecting 'EOF', '}', ':', ',', ']', got 'STRING'",
+    "error": {
+      "message": "Parse error on line 2:\n...\": \"MultiPoint\"    \"coordinates\": [[\"fo\n----------------------^\nExpecting 'EOF', '}', ':', ',', ']', got 'STRING'",
+      "hash": {
+        "text": "\"coordinates\"",
+        "token": "STRING",
+        "line": 2,
+        "loc": {
+          "first_line": 2,
+          "last_line": 2,
+          "first_column": 12,
+          "last_column": 24
+        },
+        "expected": [
+          "'EOF'",
+          "'}'",
+          "':'",
+          "','",
+          "']'"
+        ]
+      }
+    }
+  }
+]

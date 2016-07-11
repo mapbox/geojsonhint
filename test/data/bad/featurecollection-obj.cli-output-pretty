@@ -1,0 +1,4 @@
+test/data/bad/featurecollection-obj.geojson
+        1:1  error    "features" member should be an array, but is an object instead
+
+✖ 1 error

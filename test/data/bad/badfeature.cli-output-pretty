@@ -1,0 +1,4 @@
+test/data/bad/badfeature.geojson
+        1:1  error    Every feature must be an object
+
+✖ 1 error

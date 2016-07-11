@@ -3,8 +3,8 @@
 var fs = require('fs'),
     path = require('path'),
     geojsonhint = require('../'),
-    chalk = require('chalk'),
-    table = require('text-table'),
+    VFile = require('vfile'),
+    vfileReporter = require('vfile-reporter'),
     concat = require('concat-stream'),
     argv = require('minimist')(process.argv.slice(2));
 
@@ -19,16 +19,6 @@ if (argv._[0]) {
 }
 
 (filename ? fs.createReadStream(filename) : process.stdin).pipe(concat(hint));
-
-/**
- * Given a word and a count, append an s if count is not one.
- * @param {string} word A word in its singular form.
- * @param {int} count A number controlling whether word should be pluralized.
- * @returns {string} The original word with an s on the end if count is not one.
- */
-function pluralize(word, count) {
-    return (count === 1 ? word : word + 's');
-}
 
 function hint(input) {
 
@@ -51,42 +41,21 @@ function hint(input) {
             console.log(JSON.stringify(errors, null, 2));
         }
     } else if (format === 'pretty') {
-        if (errors instanceof Error) {
-            console.log(chalk.red('invalid JSON'));
-            throw errors;
-        }
-        var nWarnings = 0;
-        var nErrors = 0;
-        var output = table(errors.map(function(e) {
-          if (e.level === "warn") {
-            nWarnings += 1;
-            return [
-              e.line + ':',
-              chalk.yellow(e.message)
-            ];
-          } else {
-            // Assume "error" level by default
-            nErrors += 1;
-            return [
-              e.line + ':',
-              chalk.red(e.message)
-            ];
-          }
-        }), {
-          align: ['r', 'l']
-        })
-        output += '\n\n' + nErrors + ' ' + chalk.red(pluralize('error', nErrors));
-        output += '\n' + nWarnings + ' ' + chalk.yellow(pluralize('warning', nWarnings));
-        console.log(output);
-    } else if (format === 'compact') {
-        if (errors instanceof Error) {
-            console.log(chalk.red('invalid JSON'));
-            throw errors;
-        }
-        var filePart = filename ? filename + ': ' : '';
-        var level;
+        var file = new VFile({
+            contents: input,
+            filename: filename
+        });
+        file.quiet = true;
         errors.forEach(function(e) {
-          level = e.level ? e.level : "error";
+          var pos = { line: e.line };
+          var fn = (e.level === 'warn')  ? 'warn' : 'fail';
+          file[fn](e.message, pos)
+        });
+        console.log(vfileReporter(file));
+    } else if (format === 'compact') {
+        var filePart = filename ? filename + ': ' : '';
+        errors.forEach(function(e) {
+          var level = e.level ? e.level : "error";
           console.log(filePart + 'line ' + e.line + ' - ' + e.message + " - " + level);
         });
     } else {

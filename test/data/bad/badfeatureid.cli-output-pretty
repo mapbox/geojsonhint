@@ -1,0 +1,4 @@
+test/data/bad/badfeatureid.geojson
+        4:1  error    Feature "id" member must have a string or number value
+
+✖ 1 error

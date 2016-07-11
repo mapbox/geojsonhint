@@ -1,0 +1,4 @@
+test/data/bad/different-first-size.geojson
+        4:1  error    the first and last positions in a LinearRing of coordinates must be the same
+
+✖ 1 error

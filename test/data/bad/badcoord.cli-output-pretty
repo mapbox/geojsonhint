@@ -1,0 +1,4 @@
+test/data/bad/badcoord.geojson
+        3:1  error    each element in a position must be a number
+
+✖ 1 error

@@ -1,0 +1,14 @@
+test/data/bad/excessive_precision_truncated.geojson
+        2:1  warning  precision of coordinates should be reduced
+        2:1  warning  precision of coordinates should be reduced
+        3:1  warning  precision of coordinates should be reduced
+        3:1  warning  precision of coordinates should be reduced
+        4:1  warning  precision of coordinates should be reduced
+        4:1  warning  precision of coordinates should be reduced
+        5:1  warning  precision of coordinates should be reduced
+        5:1  warning  precision of coordinates should be reduced
+        6:1  warning  precision of coordinates should be reduced
+        6:1  warning  precision of coordinates should be reduced
+        7:1  warning  truncated warnings: we've encountered coordinate precision warning 10 times, no more warnings will be reported
+
+⚠ 11 warnings

@@ -1,0 +1,4 @@
+test/data/bad/expected_object.geojson
+        1:1  error    "properties" member should be object, but is an Number instead
+
+✖ 1 error

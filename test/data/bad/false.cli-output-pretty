@@ -1,0 +1,5 @@
+test/data/bad/false.geojson
+        1:1  error    The geometries array in a GeometryCollection must contain only geometry objects
+        3:1  warning  GeometryCollection with a single geometry should be avoided in favor of single part or a single object of multi-part type
+
+2 messages (✖ 1 error, ⚠ 1 warning)

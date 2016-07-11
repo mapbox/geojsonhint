@@ -1,0 +1,5 @@
+test/data/bad/feature_changed_semantics.geojson
+        1:1  error    Feature object cannot contain a "features" member
+        1:1  error    Feature object cannot contain a "coordinates" member
+
+✖ 2 errors

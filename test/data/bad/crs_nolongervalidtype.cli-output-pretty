@@ -1,0 +1,4 @@
+test/data/bad/crs_nolongervalidtype.geojson
+        1:1  warning  old-style crs member is not recommended
+
+⚠ 1 warning
