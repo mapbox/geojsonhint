@@ -1,0 +1,10 @@
+[
+  {
+    "message": "FeatureCollection object cannot contain a \"properties\" member",
+    "line": 1
+  },
+  {
+    "message": "FeatureCollection object cannot contain a \"coordinates\" member",
+    "line": 1
+  }
+]

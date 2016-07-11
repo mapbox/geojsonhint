@@ -1,8 +1,0 @@
-[
-  {
-    "message": "The type of a crs must be either \"name\" or \"link\""
-  },
-  {
-    "message": "The geometries array in a GeometryCollection must contain only geometry objects"
-  }
-]

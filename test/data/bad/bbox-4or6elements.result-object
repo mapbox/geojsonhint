@@ -1,0 +1,5 @@
+[
+  {
+    "message": "bbox must contain 4 elements (for 2D) or 6 elements (for 3D)"
+  }
+]

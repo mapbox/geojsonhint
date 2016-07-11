@@ -1,0 +1,14 @@
+[
+  {
+    "message": "geometry object cannot contain a \"properties\" member",
+    "line": 1
+  },
+  {
+    "message": "geometry object cannot contain a \"geometry\" member",
+    "line": 1
+  },
+  {
+    "message": "geometry object cannot contain a \"features\" member",
+    "line": 1
+  }
+]

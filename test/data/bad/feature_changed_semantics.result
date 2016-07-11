@@ -1,0 +1,10 @@
+[
+  {
+    "message": "Feature object cannot contain a \"features\" member",
+    "line": 1
+  },
+  {
+    "message": "Feature object cannot contain a \"coordinates\" member",
+    "line": 1
+  }
+]

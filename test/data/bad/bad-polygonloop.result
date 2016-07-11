@@ -1442,5 +1442,10 @@
   {
     "message": "a number was found where a coordinate array should have been found: this needs to be nested more deeply",
     "line": 1445
+  },
+  {
+    "message": "Polygons and MultiPolygons should follow the right-hand rule",
+    "level": "warn",
+    "line": 2
   }
 ]

@@ -2,5 +2,10 @@
   {
     "message": "The geometries array in a GeometryCollection must contain only geometry objects",
     "line": 1
+  },
+  {
+    "message": "GeometryCollection with a single geometry should be avoided in favor of single part or a single object of multi-part type",
+    "level": "warn",
+    "line": 3
   }
 ]

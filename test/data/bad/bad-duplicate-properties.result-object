@@ -1,8 +1,11 @@
 [
   {
-    "message": "\"properties\" property required"
+    "message": "Feature object cannot contain a \"features\" member"
   },
   {
-    "message": "\"geometry\" property required"
+    "message": "\"properties\" member required"
+  },
+  {
+    "message": "\"geometry\" member required"
   }
 ]

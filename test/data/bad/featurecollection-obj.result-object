@@ -1,5 +1,5 @@
 [
   {
-    "message": "\"features\" property should be an array, but is an object instead"
+    "message": "\"features\" member should be an array, but is an object instead"
   }
 ]

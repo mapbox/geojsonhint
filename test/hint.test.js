@@ -22,7 +22,7 @@ test('geojsonhint', function(t) {
         line: 0
     }], 'expected string input');
     t.deepEqual(geojsonhint.hint('{}'), [{
-        message: 'The type property is required and was not found',
+        message: '"type" member required',
         line: 1
     }], 'just an object');
     test('validates incorrect files', function(t) {

@@ -1,6 +1,6 @@
 [
   {
-    "message": "each element in a bbox property must be a number",
+    "message": "each element in a bbox member must be a number",
     "line": 4
   }
 ]
