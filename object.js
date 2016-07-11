@@ -24,11 +24,7 @@ function hint(gj, options) {
             });
         }
 
-        if (!_.type) {
-            errors.push({
-                message: 'The type member is required and was not found',
-                line: _.__line__
-            });
+        if (requiredProperty(_, 'type', 'string')) {
         } else if (!types[_.type]) {
             var expectedType = typesLower[_.type.toLowerCase()];
             if (expectedType !== undefined) {
