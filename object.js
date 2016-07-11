@@ -24,7 +24,7 @@ function hint(gj, options) {
 
         if (!_.type) {
             errors.push({
-                message: 'The type property is required and was not found',
+                message: 'The type member is required and was not found',
                 line: _.__line__
             });
         } else if (!types[_.type]) {
@@ -53,14 +53,14 @@ function hint(gj, options) {
     function requiredProperty(_, name, type) {
         if (typeof _[name] === 'undefined') {
             return errors.push({
-                message: '"' + name + '" property required',
+                message: '"' + name + '" member required',
                 line: _.__line__
             });
         } else if (type === 'array') {
             if (!Array.isArray(_[name])) {
                 return errors.push({
                     message: '"' + name +
-                        '" property should be an array, but is an ' +
+                        '" member should be an array, but is an ' +
                         (typeof _[name]) + ' instead',
                     line: _.__line__
                 });
@@ -68,14 +68,14 @@ function hint(gj, options) {
         } else if (type === 'object' && _[name] && _[name].constructor.name !== 'Object') {
             return errors.push({
                 message: '"' + name +
-                    '" property should be ' + (type) +
+                    '" member should be ' + (type) +
                     ', but is an ' + (_[name].constructor.name) + ' instead',
                 line: _.__line__
             });
         } else if (type && typeof _[name] !== type) {
             return errors.push({
                 message: '"' + name +
-                    '" property should be ' + (type) +
+                    '" member should be ' + (type) +
                     ', but is an ' + (typeof _[name]) + ' instead',
                 line: _.__line__
             });
@@ -290,7 +290,7 @@ function hint(gj, options) {
         if (Array.isArray(_.bbox)) {
             if (!everyIs(_.bbox, 'number')) {
                 errors.push({
-                    message: 'each element in a bbox property must be a number',
+                    message: 'each element in a bbox member must be a number',
                     line: _.bbox.__line__
                 });
             }
@@ -303,7 +303,7 @@ function hint(gj, options) {
             return errors.length;
         } else {
             errors.push({
-                message: 'bbox property must be an array of numbers, but is a ' + (typeof _.bbox),
+                message: 'bbox member must be an array of numbers, but is a ' + (typeof _.bbox),
                 line: _.__line__
             });
         }
@@ -429,7 +429,7 @@ function hint(gj, options) {
             typeof feature.id !== 'string' &&
             typeof feature.id !== 'number') {
             errors.push({
-                message: 'Feature "id" property must have a string or number value',
+                message: 'Feature "id" member must have a string or number value',
                 line: feature.__line__
             });
         }
@@ -447,7 +447,7 @@ function hint(gj, options) {
         }
         if (feature.type !== 'Feature') {
             errors.push({
-                message: 'GeoJSON features must have a type=feature property',
+                message: 'GeoJSON features must have a type=feature member',
                 line: feature.__line__
             });
         }

@@ -1,6 +1,6 @@
 [
   {
-    "message": "\"properties\" property should be object, but is an Array instead",
+    "message": "\"properties\" member should be object, but is an Array instead",
     "line": 1
   }
 ]
