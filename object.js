@@ -25,7 +25,10 @@ function hint(gj, options) {
         }
 
         if (requiredProperty(_, 'type', 'string')) {
-        } else if (!types[_.type]) {
+            return;
+        }
+
+        if (!types[_.type]) {
             var expectedType = typesLower[_.type.toLowerCase()];
             if (expectedType !== undefined) {
                 errors.push({
@@ -45,7 +48,9 @@ function hint(gj, options) {
 
     function everyIs(_, type) {
         // make a single exception because typeof null === 'object'
-        return _.every(function(x) { return (x !== null) && (typeof x === type); });
+        return _.every(function(x) {
+            return x !== null && typeof x === type;
+        });
     }
 
     function requiredProperty(_, name, type) {
@@ -115,55 +120,51 @@ function hint(gj, options) {
                     ' instead',
                 line: _.__line__ || line
             });
-        } else {
-            if (_.length < 2) {
-                return errors.push({
-                    message: 'position must have 2 or more elements',
-                    line: _.__line__ || line
-                });
-            }
-            if (_.length > 3) {
-                return errors.push({
-                    message: 'position should not have more than 3 elements',
-                    line: _.__line__ || line
-                });
-            }
-            if (!everyIs(_, 'number')) {
-                return errors.push({
-                    message: 'each element in a position must be a number',
-                    line: _.__line__ || line
-                });
-            }
+        }
+        if (_.length < 2) {
+            return errors.push({
+                message: 'position must have 2 or more elements',
+                line: _.__line__ || line
+            });
+        }
+        if (_.length > 3) {
+            return errors.push({
+                message: 'position should not have more than 3 elements',
+                line: _.__line__ || line
+            });
+        }
+        if (!everyIs(_, 'number')) {
+            return errors.push({
+                message: 'each element in a position must be a number',
+                line: _.__line__ || line
+            });
+        }
 
-            var maxPrecisionWarnings = 10;
-            var maxPrecision = 6;
-            var num;
-            if (precisionWarningCount == maxPrecisionWarnings) {
-                precisionWarningCount += 1;
-                return errors.push({
-                    message: "truncated warnings: we've encountered coordinate precision warning " + maxPrecisionWarnings + " times, no more warnings will be reported",
-                    level: "warn",
-                    line: _.__line__ || line
-                });
-            } else if (precisionWarningCount < maxPrecisionWarnings) {
-                _.forEach(function(num) {
-                    // TODO there has got to be a better way. Check original text?
-                    // By this point number has already been parsed to a float...
-                    var precision = 0;
-                    var decimalStr = (num + "").split(".")[1];
-                    if (decimalStr !== undefined)
-                        precision = decimalStr.length;
-                    if (precision > maxPrecision) {
-                        precisionWarningCount += 1;
-                        return errors.push({
-                            message: "precision of coordinates should be reduced",
-                            level: "warn",
-                            line: _.__line__ || line
-                        });
-                    }
+        var maxPrecisionWarnings = 10;
+        var maxPrecision = 6;
+        if (precisionWarningCount === maxPrecisionWarnings) {
+            precisionWarningCount += 1;
+            return errors.push({
+                message: 'truncated warnings: we\'ve encountered coordinate precision warning ' + maxPrecisionWarnings + ' times, no more warnings will be reported',
+                level: 'warn',
+                line: _.__line__ || line
+            });
+        } else if (precisionWarningCount < maxPrecisionWarnings) {
+            _.forEach(function(num) {
+                var precision = 0;
+                var decimalStr = String(num).split('.')[1];
+                if (decimalStr !== undefined)
+                    precision = decimalStr.length;
+                if (precision > maxPrecision) {
+                    precisionWarningCount += 1;
+                    return errors.push({
+                        message: 'precision of coordinates should be reduced',
+                        level: 'warn',
+                        line: _.__line__ || line
+                    });
+                }
 
-                });
-            }
+            });
         }
     }
 
@@ -173,72 +174,73 @@ function hint(gj, options) {
         }
         if (depth === 0) {
             return position(coords, line);
-        } else {
-            if (depth === 1 && type) {
-                if (type === 'LinearRing') {
-                    if (!Array.isArray(coords[coords.length - 1])) {
-                        errors.push({
-                            message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
-                            line: line
-                        });
-                        return true;
-                    }
-                    if (coords.length < 4) {
-                        errors.push({
-                            message: 'a LinearRing of coordinates needs to have four or more positions',
-                            line: line
-                        });
-                    }
-                    if (coords.length &&
-                        (coords[coords.length - 1].length !== coords[0].length ||
-                        !coords[coords.length - 1].every(function(position, index) {
-                            return coords[0][index] === position;
-                    }))) {
-                        errors.push({
-                            message: 'the first and last positions in a LinearRing of coordinates must be the same',
-                            line: line
-                        });
-                    }
-                } else if (type === 'Line' && coords.length < 2) {
-                    return errors.push({
-                        message: 'a line needs to have two or more coordinates to be valid',
+        }
+        if (depth === 1 && type) {
+            if (type === 'LinearRing') {
+                if (!Array.isArray(coords[coords.length - 1])) {
+                    errors.push({
+                        message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
+                        line: line
+                    });
+                    return true;
+                }
+                if (coords.length < 4) {
+                    errors.push({
+                        message: 'a LinearRing of coordinates needs to have four or more positions',
                         line: line
                     });
                 }
-            } 
-            if (!Array.isArray(coords)) {
-                errors.push({
-                    message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
+                if (coords.length &&
+                    (coords[coords.length - 1].length !== coords[0].length ||
+                    !coords[coords.length - 1].every(function(pos, index) {
+                        return coords[0][index] === pos;
+                }))) {
+                    errors.push({
+                        message: 'the first and last positions in a LinearRing of coordinates must be the same',
+                        line: line
+                    });
+                }
+            } else if (type === 'Line' && coords.length < 2) {
+                return errors.push({
+                    message: 'a line needs to have two or more coordinates to be valid',
                     line: line
                 });
-            } else {
-                coords.forEach(function(c) {
-                    positionArray(c, type, depth - 1, c.__line__ || line);
-                });
             }
+        }
+        if (!Array.isArray(coords)) {
+            errors.push({
+                message: 'a number was found where a coordinate array should have been found: this needs to be nested more deeply',
+                line: line
+            });
+        } else {
+            coords.forEach(function(c) {
+                positionArray(c, type, depth - 1, c.__line__ || line);
+            });
         }
     }
 
     function crs(_) {
         if (!_.crs) return;
-        var defaultCRSName = "urn:ogc:def:crs:OGC:1.3:CRS84";
+        var defaultCRSName = 'urn:ogc:def:crs:OGC:1.3:CRS84';
         if (typeof _.crs === 'object' && _.crs.properties && _.crs.properties.name === defaultCRSName) {
             errors.push({
-                message: "old-style crs member is not recommended, this object is equivalent to the default and should be removed",
-                level: "warn",
+                message: 'old-style crs member is not recommended, this object is equivalent to the default and should be removed',
+                level: 'warn',
                 line: _.__line__
             });
         } else {
             errors.push({
-                message: "old-style crs member is not recommended",
-                level: "warn",
+                message: 'old-style crs member is not recommended',
+                level: 'warn',
                 line: _.__line__
             });
         }
     }
 
     function bbox(_) {
-        if (!_.bbox) { return; }
+        if (!_.bbox) {
+            return;
+        }
         if (Array.isArray(_.bbox)) {
             if (!everyIs(_.bbox, 'number')) {
                 errors.push({
@@ -246,19 +248,18 @@ function hint(gj, options) {
                     line: _.bbox.__line__
                 });
             }
-            if (!(_.bbox.length == 4 || _.bbox.length == 6)) {
+            if (!(_.bbox.length === 4 || _.bbox.length === 6)) {
                 errors.push({
                     message: 'bbox must contain 4 elements (for 2D) or 6 elements (for 3D)',
                     line: _.bbox.__line__
                 });
             }
             return errors.length;
-        } else {
-            errors.push({
-                message: 'bbox member must be an array of numbers, but is a ' + (typeof _.bbox),
-                line: _.__line__
-            });
         }
+        errors.push({
+            message: 'bbox member must be an array of numbers, but is a ' + (typeof _.bbox),
+            line: _.__line__
+        });
     }
 
     function geometrySemantics(geom) {
@@ -351,7 +352,7 @@ function hint(gj, options) {
                     line: geometryCollection.__line__
                 });
             }
-            if (geometryCollection.geometries.length == 1) {
+            if (geometryCollection.geometries.length === 1) {
                 errors.push({
                     message: 'GeometryCollection with a single geometry should be avoided in favor of single part or a single object of multi-part type',
                     level: 'warn',
@@ -360,9 +361,9 @@ function hint(gj, options) {
             }
             geometryCollection.geometries.forEach(function(geometry) {
                 if (geometry) {
-                    if (geometry.type === "GeometryCollection") {
+                    if (geometry.type === 'GeometryCollection') {
                         errors.push({
-                            message: "GeometryCollection should avoid nested geometry collections",
+                            message: 'GeometryCollection should avoid nested geometry collections',
                             level: 'warn',
                             line: geometryCollection.geometries.__line__
                         });
@@ -441,7 +442,7 @@ function hint(gj, options) {
     root(gj);
 
     errors.forEach(function(err) {
-        if (err.hasOwnProperty('line') && err.line === undefined) {
+        if ({}.hasOwnProperty.call(err, 'line') && err.line === undefined) {
             delete err.line;
         }
     });
