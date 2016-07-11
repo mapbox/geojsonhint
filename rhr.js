@@ -1,20 +1,5 @@
-function rightHandRule (geometry) {
-    if (geometry.type == 'Polygon') {
-        return isPolyRHR(geometry.coordinates);
-    } else if (geometry.type == 'MultiPolygon') {
-        return geometry.coordinates.every(isPolyRHR);
-    }
-}
-
-function isPolyRHR (coords) {
-    if (coords && coords.length > 0) {
-        if (!isRingClockwise(coords[0]))
-            return false;
-        var interiorCoords = coords.slice(1, coords.length);
-        if (interiorCoords.some(isRingClockwise))
-            return false;
-    }
-    return true;
+function rad(x) {
+    return x * Math.PI / 180;
 }
 
 function isRingClockwise (coords) {
@@ -31,11 +16,26 @@ function isRingClockwise (coords) {
     return area >= 0;
 }
 
-function rad(x) {
-    return x * Math.PI / 180;
+function isPolyRHR (coords) {
+    if (coords && coords.length > 0) {
+        if (!isRingClockwise(coords[0]))
+            return false;
+        var interiorCoords = coords.slice(1, coords.length);
+        if (interiorCoords.some(isRingClockwise))
+            return false;
+    }
+    return true;
 }
 
-module.exports = function (geometry, errors) {
+function rightHandRule (geometry) {
+    if (geometry.type === 'Polygon') {
+        return isPolyRHR(geometry.coordinates);
+    } else if (geometry.type === 'MultiPolygon') {
+        return geometry.coordinates.every(isPolyRHR);
+    }
+}
+
+module.exports = function validateRightHandRule(geometry, errors) {
     if (!rightHandRule(geometry)) {
         errors.push({
             message: 'Polygons and MultiPolygons should follow the right-hand rule',

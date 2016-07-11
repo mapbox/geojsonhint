@@ -10,18 +10,17 @@
     "url": "https://github.com/mapbox/geojsonhint/issues"
   },
   "dependencies": {
-    "concat-stream": "~1.4.4",
+    "concat-stream": "~1.5.1",
     "jsonlint-lines": "1.7.1",
-    "minimist": "1.1.1",
+    "minimist": "1.2.0",
     "vfile": "1.4.0",
     "vfile-reporter": "2.0.0"
   },
   "devDependencies": {
-    "benchmark": "^1.0.0",
-    "eslint": "^1.10.3",
-    "eslint-config-unstyled": "^1.1.0",
-    "fuzzer": "~0.1.0",
-    "glob": "~3.2.6",
+    "benchmark": "^2.1.0",
+    "eslint": "^3.0.1",
+    "fuzzer": "~0.2.0",
+    "glob": "~7.0.5",
     "tap": "6.1.1"
   },
   "directories": {
@@ -38,6 +37,6 @@
     "url": "git://github.com/mapbox/geojsonhint.git"
   },
   "scripts": {
-    "test": "eslint index.js object.js && tap test/*.js --coverage"
+    "test": "eslint . && tap test/*.js --coverage"
   }
 }
