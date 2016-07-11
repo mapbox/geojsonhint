@@ -1,0 +1,4 @@
+test/data/bad/bad-object-type.geojson
+        1:1  error    "type" member should be string, but is an object instead
+
+✖ 1 error

@@ -1,0 +1,4 @@
+test/data/bad/crs_notvalid_evencrs84.geojson
+        1:1  warning  old-style crs member is not recommended, this object is equivalent to the default and should be removed
+
+⚠ 1 warning

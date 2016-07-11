@@ -1,0 +1,4 @@
+test/data/bad/bbox-contains-string.geojson
+        4:1  error    each element in a bbox member must be a number
+
+✖ 1 error

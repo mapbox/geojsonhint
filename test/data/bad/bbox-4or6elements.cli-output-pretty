@@ -1,0 +1,4 @@
+test/data/bad/bbox-4or6elements.geojson
+        4:1  error    bbox must contain 4 elements (for 2D) or 6 elements (for 3D)
+
+✖ 1 error

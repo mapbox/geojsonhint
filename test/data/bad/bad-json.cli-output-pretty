@@ -1,0 +1,7 @@
+test/data/bad/bad-json.geojson
+        1:1  error    Parse error on line 2:
+...": "MultiPoint"    "coordinates": [["fo
+----------------------^
+Expecting 'EOF', '}', ':', ',', ']', got 'STRING'
+
+✖ 1 error

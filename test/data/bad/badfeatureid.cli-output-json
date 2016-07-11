@@ -1,0 +1,6 @@
+[
+  {
+    "message": "Feature \"id\" member must have a string or number value",
+    "line": 4
+  }
+]

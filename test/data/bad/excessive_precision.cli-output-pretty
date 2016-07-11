@@ -1,0 +1,5 @@
+test/data/bad/excessive_precision.geojson
+        1:1  warning  precision of coordinates should be reduced
+        1:1  warning  precision of coordinates should be reduced
+
+⚠ 2 warnings

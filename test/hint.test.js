@@ -2,6 +2,8 @@ var test = require('tap').test,
     fs = require('fs'),
     glob = require('glob'),
     fuzzer = require('fuzzer'),
+    exec = require('child_process').exec,
+    path = require('path'),
     geojsonhint = require('../');
 
 function file(x) {
@@ -32,6 +34,31 @@ test('geojsonhint', function(t) {
                 fs.writeFileSync(f.replace('geojson', 'result'), JSON.stringify(geojsonhint.hint(gj), null, 2));
             }
             t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result')), f);
+        });
+        t.end();
+    });
+    test('binary produces output for bad files', function(t) {
+        glob.sync('test/data/bad/*.geojson').slice(0, 10).forEach(function(f) {
+            t.test(f + ' pretty', function(tt) {
+                exec(path.join(__dirname, '../bin/geojsonhint ' + f), function(err, output) {
+                    if (process.env.UPDATE) {
+                        fs.writeFileSync(f.replace('geojson', 'cli-output-pretty'), output);
+                    }
+                    var expected = fs.readFileSync(f.replace('geojson', 'cli-output-pretty'), 'utf8');
+                    tt.equal(output, expected);
+                    tt.end();
+                });
+            });
+            t.test(f + ' json', function(tt) {
+                exec(path.join(__dirname, '../bin/geojsonhint ' + f + ' --format=json'), function(err, output) {
+                    if (process.env.UPDATE) {
+                        fs.writeFileSync(f.replace('geojson', 'cli-output-json'), output);
+                    }
+                    var expected = fs.readFileSync(f.replace('geojson', 'cli-output-json'), 'utf8');
+                    tt.equal(output, expected);
+                    tt.end();
+                });
+            });
         });
         t.end();
     });
