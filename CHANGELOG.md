@@ -1,3 +1,13 @@
+## 2.0.0-beta
+
+* 2.0.0 will be released once the IETF Draft graduates to a specification
+* geojsonhint now validates according to the [IETF specification of GeoJSON](https://datatracker.ietf.org/wg/geojson/documents/),
+  which includes useful improvements in clarity.
+* we now use `vfile` for fancier message formatting in output
+* geojsonhint includes both warnings and errors now, so it can warn about
+  things that are not technically wrong but can be improved, and enforce
+  recommendations of the specification.
+
 ## 1.2.1
 
 * Fixes a case where coordinate arrays that aren't nested deeply would trigger
