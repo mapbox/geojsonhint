@@ -8,6 +8,8 @@ var jsonlint = require('jsonlint-lines'),
  * @param {boolean} [options.noDuplicateMembers=true] forbid repeated
  * properties. This is only available for string input, becaused parsed
  * Objects cannot have duplicate properties.
+ * @param {boolean} [options.precisionWarning=true] warn if GeoJSON contains
+ * unnecessary coordinate precision.
  * @returns {Array<Object>} an array of errors
  */
 function hint(str, options) {

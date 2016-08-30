@@ -83,9 +83,52 @@ test('geojsonhint', function(t) {
         t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
             noDuplicateMembers: true
         }), [{
-          "line": 1,
-          "message": "An object contained duplicate members, making parsing ambigous: type"
+          line: 1,
+          message: 'An object contained duplicate members, making parsing ambigous: type'
         }], 'sketchy object not permitted by default');
+        t.end();
+    });
+    test('noDuplicateMembers option=true', function(t) {
+        t.deepEqual(geojsonhint.hint('{ "type": "Point", "coordinates": [100.0000000001, 5.0000000001] }', {
+            precisionWarning: true
+        }), [{
+          line: 1,
+          level: 'warn',
+          message: 'precision of coordinates should be reduced'
+        }, {
+          line: 1,
+          level: 'warn',
+          message: 'precision of coordinates should be reduced'
+        }], 'sketchy object not permitted by default');
+        t.end();
+    });
+    test('noDuplicateMembers option=true', function(t) {
+        var excessiveFeature = {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    100.0000001,
+                    100.0000001
+                ]
+            },
+            properties: {}
+        };
+        var featureCollection = {
+            type: 'FeatureCollection',
+            features: []
+        };
+        for (var i = 0; i < 100; i++) featureCollection.features.push(excessiveFeature);
+        var truncated = geojsonhint.hint(JSON.stringify(featureCollection, null, 2), {
+            precisionWarning: true
+        })
+        t.equal(truncated.length, 11);
+        t.deepEqual(truncated[10], {
+          line: 63,
+          level: 'warn',
+          message: 'truncated warnings: we\'ve encountered coordinate precision warning 10 times, '
+              + 'no more warnings will be reported'
+        });
         t.end();
     });
     test('invalid roots', function(t) {

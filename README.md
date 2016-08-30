@@ -29,7 +29,10 @@ the GeoJSON standards and returns them as an array of errors. An example of the 
 }]
 ```
 
-The options argument is optional and has one option: `noDuplicateMembers`.
+The options argument is optional. It has these options:
+
+`noDuplicateMembers`.
+
 By default, geojsonhint will treat repeated properties as an error: you can
 set noDuplicateMembers to false to allow them. For instance:
 
@@ -41,6 +44,36 @@ geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":
 
 The repeated `type` property in this input will be ignored with the option,
 and flagged without it.
+
+
+`precisionWarning`.
+
+GeoJSON [now recommends six decimal places of accuracy](https://tools.ietf.org/html/rfc7946#section-11.2)
+for coordinates (Section 11.2). This option adds a warning message when coordinates
+contain over 6 decimal places of accuracy, up to 10 coordinates before the warning
+message is truncated for performance.
+
+```js
+geojsonhint.hint('{ "type": "Point", "coordinates": [100.0000000001, 5.0000000001] }', {
+    precisionWarning: false
+});
+```
+
+With this option enabled, geojsonhint will produce these warnings:
+
+```js
+[{
+  line: 1,
+  level: 'warn',
+  message: 'precision of coordinates should be reduced'
+}, {
+  line: 1,
+  level: 'warn',
+  message: 'precision of coordinates should be reduced'
+}]
+```
+
+Without this option, this input will pass without errors.
 
 ## Line Numbers
 
