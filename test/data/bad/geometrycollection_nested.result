@@ -1,7 +1,6 @@
 [
   {
     "message": "GeometryCollection should avoid nested geometry collections",
-    "level": "warn",
     "line": 2
   }
 ]

@@ -48,8 +48,10 @@ function hint(input) {
         file.quiet = true;
         errors.forEach(function(e) {
           var pos = { line: e.line };
-          var fn = (e.level === 'warn')  ? 'warn' : 'fail';
-          file[fn](e.message, pos)
+          var fn = (e.level === 'message')  ? 'message' : 'fail';
+          try {
+              file[fn](e.message, pos)
+          } catch(e) { }
         });
         console.log(vfileReporter(file));
     } else if (format === 'compact') {

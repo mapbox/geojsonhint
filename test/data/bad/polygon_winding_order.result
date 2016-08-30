@@ -1,7 +1,7 @@
 [
   {
     "message": "Polygons and MultiPolygons should follow the right-hand rule",
-    "level": "warn",
+    "level": "message",
     "line": 1
   }
 ]

@@ -93,11 +93,11 @@ test('geojsonhint', function(t) {
             precisionWarning: true
         }), [{
           line: 1,
-          level: 'warn',
+          level: 'message',
           message: 'precision of coordinates should be reduced'
         }, {
           line: 1,
-          level: 'warn',
+          level: 'message',
           message: 'precision of coordinates should be reduced'
         }], 'sketchy object not permitted by default');
         t.end();
@@ -125,7 +125,7 @@ test('geojsonhint', function(t) {
         t.equal(truncated.length, 11);
         t.deepEqual(truncated[10], {
           line: 63,
-          level: 'warn',
+          level: 'message',
           message: 'truncated warnings: we\'ve encountered coordinate precision warning 10 times, '
               + 'no more warnings will be reported'
         });
