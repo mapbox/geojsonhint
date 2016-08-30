@@ -64,11 +64,11 @@ With this option enabled, geojsonhint will produce these warnings:
 ```js
 [{
   line: 1,
-  level: 'warn',
+  level: 'message',
   message: 'precision of coordinates should be reduced'
 }, {
   line: 1,
-  level: 'warn',
+  level: 'message',
   message: 'precision of coordinates should be reduced'
 }]
 ```

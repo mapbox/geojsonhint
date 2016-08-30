@@ -1,4 +1,3 @@
-test/data/bad/bad-properties-as-array.geojson
-        1:1  error    "properties" member should be object, but is an Array instead
+  1:1  error  "properties" member should be object, but is an Array instead
 
 ✖ 1 error

@@ -1,7 +1,7 @@
 {
   "name": "geojsonhint",
   "description": "validate and sanity-check geojson files",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-beta1",
   "author": "Tom MacWright",
   "bin": {
     "geojsonhint": "./bin/geojsonhint"
@@ -17,15 +17,16 @@
     "concat-stream": "~1.5.1",
     "jsonlint-lines": "1.7.1",
     "minimist": "1.2.0",
-    "vfile": "1.4.0",
-    "vfile-reporter": "2.0.0"
+    "vfile": "2.0.0",
+    "vfile-reporter": "3.0.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.0",
+    "browserify": "13.1.0",
     "eslint": "^3.0.1",
     "fuzzer": "~0.2.0",
     "glob": "~7.0.5",
-    "tap": "6.1.1"
+    "tap": "7.0.0"
   },
   "directories": {
     "test": "test"
