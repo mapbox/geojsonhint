@@ -1,3 +1,7 @@
+## 2.0.0-beta2
+
+* Fix missing `bin` directory from beta1 release.
+
 ## 2.0.0-beta1
 
 * geojsonhint.js has been removed from this repository: it's a built file,
