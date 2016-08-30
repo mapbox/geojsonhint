@@ -11,6 +11,7 @@
   },
   "files": [
     "geojsonhint.js",
+    "bin",
     "lib"
   ],
   "dependencies": {
