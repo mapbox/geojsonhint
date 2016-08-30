@@ -87,19 +87,22 @@ to choose which input to use:
   bottleneck in your application, don't [prematurely optimize](http://c2.com/cgi/wiki?PrematureOptimization) based
   on this fact.
 
-For byte-minimalists, you can `require('geojsonhint/object')` to get a version
+If you're really trying to save space and don't care about JSON validity errors -
+only GeoJSON errors - you can `require('geojsonhint/lib/object')` to get a version
 of this library that bypasses jsonlint-lines and provides only the object
 interface.
 
 ## use it
 
-as a library
+**npm** (node.js, browserify, webpack, etc)
 
     npm install --save geojsonhint
 
-as a web library
+**CDN / script tag**
 
-    curl https://raw.github.com/mapbox/geojsonhint/master/geojsonhint.js > geojsonhint.js
+Hit this URL to resolve to the latest pinned version.
+
+    https://npmcdn.com/geojsonhint@latest/geojsonhint.js
 
 ## As a command-line utility
 
@@ -120,16 +123,10 @@ Options:
 line 9, each element in a position must be a number
 ```
 
-## developing
+## Development
 
-Tests:
-
-    npm test
-
-Building the browser version:
-
-    npm install -g browserify
-    make
+* Tests: `npm test`
+* Building the browser version: `npm run build`
 
 ## See Also
 

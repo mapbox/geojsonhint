@@ -9,6 +9,10 @@
   "bugs": {
     "url": "https://github.com/mapbox/geojsonhint/issues"
   },
+  "files": [
+    "geojsonhint.js",
+    "lib"
+  ],
   "dependencies": {
     "concat-stream": "~1.5.1",
     "jsonlint-lines": "1.7.1",
@@ -31,12 +35,13 @@
     "hint"
   ],
   "license": "ISC",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/mapbox/geojsonhint.git"
   },
   "scripts": {
-    "test": "eslint . && tap test/*.js --coverage"
+    "test": "eslint . && tap test/*.js --coverage",
+    "prepublish": "browserify . --standalone geojsonhint > geojsonhint.js"
   }
 }
