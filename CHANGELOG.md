@@ -1,3 +1,14 @@
+## 2.0.0-beta1
+
+* geojsonhint.js has been removed from this repository: it's a built file,
+  useful for people who want to include geojson as a script tag. That file
+  will still be available on npmcdn, which is documented in the readme. This
+  change ensures that contributors don't accidentally mess with the geojsonhint.js
+  built file when they should be editing the source files in `lib`: now the
+  repository contains only source files.
+* vfile and vfile-reporter are upgraded. output is slightly different in formatting
+  but functionally the same.
+
 ## 2.0.0-beta
 
 * 2.0.0 will be released once the IETF Draft graduates to a specification
