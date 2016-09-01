@@ -102,7 +102,7 @@ interface.
 
 Hit this URL to resolve to the latest pinned version.
 
-    https://npmcdn.com/geojsonhint@latest/geojsonhint.js
+    https://unpkg.com/geojsonhint@latest/geojsonhint.js
 
 ## As a command-line utility
 
