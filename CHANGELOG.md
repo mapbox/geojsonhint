@@ -1,3 +1,9 @@
+## 2.0.0
+
+**This is the first stable release of geojsonhint that supports the [IETF GeoJSON standard](https://tools.ietf.org/html/rfc7946)**
+
+* Fixes winding order reversal from beta releases.
+
 ## 2.0.0-beta2
 
 * Fix missing `bin` directory from beta1 release.
