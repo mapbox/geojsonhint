@@ -2,7 +2,7 @@
 
 # geojsonhint: complete, fast, standards-based validation for geojson
 
-A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](http://www.geojson.org/)
+A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](https://tools.ietf.org/html/rfc7946)
 standard. geojsonhint is written _to the standard_, with no missing or additional
 opinions about structure.
 
@@ -11,9 +11,7 @@ can return informative, line-oriented parsing errors.
 
 ## Specification
 
-The basis of this tool is the published [GeoJSON](http://www.geojson.org/) 1.0 specification.
-In the few cases where [draft-geojson](https://github.com/geojson/draft-geojson/blob/master/middle.mkd),
-the ietf-candidate version of GeoJSON, is more precise (for instance, [the id property](https://github.com/mapbox/geojsonhint/issues/24)), the validator follows the draft spec as well.
+The basis of this tool is the published [GeoJSON](https://tools.ietf.org/html/rfc7946) specification.
 
 ## API
 
