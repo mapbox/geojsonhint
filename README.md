@@ -94,19 +94,19 @@ interface.
 
 **npm** (node.js, browserify, webpack, etc)
 
-    npm install --save geojsonhint
+    npm install --save @mapbox/geojsonhint
 
 **CDN / script tag**
 
 Hit this URL to resolve to the latest pinned version.
 
-    https://unpkg.com/geojsonhint@latest/geojsonhint.js
+    https://unpkg.com/@mapbox/geojsonhint@latest/geojsonhint.js
 
 ## As a command-line utility
 
 Install:
 
-    npm install -g geojsonhint
+    npm install -g @mapbox/geojsonhint
 
 ```
 ➟ geojsonhint
