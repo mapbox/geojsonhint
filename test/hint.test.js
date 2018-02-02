@@ -62,6 +62,31 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
+    test('binary exits with 1 for bad files', function(t) {
+        var bin = path.join(__dirname, '../bin/geojsonhint')
+        var f = glob.sync('test/data/bad/*.geojson')[0];
+        t.test(f + ' pretty', function(tt) {
+            exec(bin + ' ' + f, function(err, output) {
+                tt.ok(err, 'missing error');
+                tt.equal(err.code, 1);
+                // rule out errors we don't expect
+                tt.equal(err.killed, false);
+                tt.equal(err.signal, null);
+                tt.end();
+            });
+        });
+        t.test(f + ' json', function(tt) {
+            exec(bin + ' ' + f + ' --format=json', function(err, output) {
+                tt.ok(err, 'missing error');
+                tt.equal(err.code, 1);
+                // rule out errors we don't expect
+                tt.equal(err.killed, false);
+                tt.equal(err.signal, null);
+                tt.end();
+            });
+        });
+        t.end();
+    });
     test('validates incorrect files as objects', function(t) {
         glob.sync('test/data/bad/*.geojson').forEach(function(f) {
             if (f === 'test/data/bad/bad-json.geojson') return;
