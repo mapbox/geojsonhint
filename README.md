@@ -2,7 +2,7 @@
 
 # geojsonhint: complete, fast, standards-based validation for geojson
 
-A [lint](http://bit.ly/12jjJyW) tool for the [GeoJSON](https://tools.ietf.org/html/rfc7946)
+A [lint](https://en.wikipedia.org/wiki/Lint_%28software%29) tool for the [GeoJSON](https://tools.ietf.org/html/rfc7946)
 standard. geojsonhint is written _to the standard_, with no missing or additional
 opinions about structure.
 
