@@ -63,4 +63,9 @@ function hint(input) {
     } else {
         throw new Error('Format unknown');
     }
+
+    var shouldFail = errors.some(function(e) {
+        return e.level !== 'message'
+    });
+    if (shouldFail) process.exitCode = 1
 }
