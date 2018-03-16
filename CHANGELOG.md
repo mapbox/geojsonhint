@@ -1,3 +1,8 @@
+## 2.1.0
+
+* Exit 1 in cli tool when it hits an error
+* Update deps to latest versions
+
 ## 2.0.0
 
 **This is the first stable release of geojsonhint that supports the [IETF GeoJSON standard](https://tools.ietf.org/html/rfc7946)**
