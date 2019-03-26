@@ -1,6 +1,6 @@
+  1:1  error  "geometry" member required
+  1:1  error  "properties" member required
   1:1  error  An object contained duplicate members, making parsing ambigous: type
   1:1  error  Feature object cannot contain a "features" member
-  1:1  error  "properties" member required
-  1:1  error  "geometry" member required
 
 ✖ 4 errors
