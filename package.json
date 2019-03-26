@@ -1,7 +1,7 @@
 {
   "name": "@mapbox/geojsonhint",
   "description": "validate and sanity-check geojson files",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "Tom MacWright",
   "bin": {
     "geojsonhint": "./bin/geojsonhint"
