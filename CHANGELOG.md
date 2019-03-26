@@ -1,3 +1,11 @@
+## 3.0.0
+
+* Bump tested node versions to 8 & 10
+
+## 2.2.0
+
+* Use `constructor` object test to stay compatible with IE11
+
 ## 2.1.0
 
 * Exit 1 in cli tool when it hits an error
