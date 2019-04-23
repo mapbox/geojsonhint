@@ -73,6 +73,28 @@ With this option enabled, geojsonhint will produce these warnings:
 
 Without this option, this input will pass without errors.
 
+`rightHandRule`.
+
+By default, geojsonhint will reject Polyons and MultiPolygons with linear rings that do not follow
+the right-hand rule: you can set `rightHandRule` to `false` to skip this validation. For instance:
+
+```js
+geojsonhint.hint('{"type":"Feature","properties":{...},"geometry":{...}}', {
+    rightHandRule: false
+});
+```
+
+By default the `rightHandRule` option is set to `true`, and geojsonhint will produce these warnings:
+
+```js
+[{
+  line: 1,
+  level: 'message',
+  message: 'Polygons and MultiPolygons should follow the right-hand rule',
+}]
+```
+
+
 ## Line Numbers
 
 Note that the GeoJSON can be given as a **string or as an object**. Here's how

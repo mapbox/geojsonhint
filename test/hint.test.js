@@ -156,6 +156,14 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
+    t.test('rightHandRule option=false', function(t) {
+        var badRhrFeature = path.join(__dirname, '../test/data/bad/bad-polygon-interiorring-rhr.geojson');
+
+        t.deepEqual(geojsonhint.hint(filejs(badRhrFeature), {
+            rightHandRule: false
+        }), [], 'Linear ring with non right-hand winding in object permitted');
+        t.end();
+    });
     test('invalid roots', function(t) {
         t.deepEqual(geojsonhint.hint('null'), [{
             message: 'The root of a GeoJSON object must be an object.',
