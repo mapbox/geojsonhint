@@ -130,9 +130,7 @@ line 9, each element in a position must be a number
 
 ## See Also
 
-* [geojsonhint online](https://www.mapbox.com/geojsonhint/)
 * [grunt-geojsonhint](https://github.com/jieter/grunt-geojsonhint) does it as a Grunt task
-* [geojsonlint.com](http://geojsonlint.com/) does this server-side
 * [GeoJSON-Validation](https://github.com/craveprogramminginc/GeoJSON-Validation) is another node module for this.
 * [geojson-assert](https://github.com/calvinmetcalf/geojson-assert) does it in assertion tests
 * [geojsonlint](https://github.com/ropenscilabs/geojsonlint) does it in an R package
