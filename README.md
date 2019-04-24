@@ -2,6 +2,8 @@
 
 # geojsonhint: complete, fast, standards-based validation for geojson
 
+Important: development of geojsonhint is currently paused. Until development restarts, please refrain from adding non-critical issues or PRs.
+
 A [lint](https://en.wikipedia.org/wiki/Lint_%28software%29) tool for the [GeoJSON](https://tools.ietf.org/html/rfc7946)
 standard. geojsonhint is written _to the standard_, with no missing or additional
 opinions about structure.
