@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Bump minimist to >v1.2.5
+
 ## 3.0.0
 
 * Bump tested node versions to 8 & 10
