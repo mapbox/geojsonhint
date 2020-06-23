@@ -1,13 +1,13 @@
 {
-  "name": "@mapbox/geojsonhint",
+  "name": "@rurban/geojsonhint",
   "description": "validate and sanity-check geojson files",
-  "version": "3.0.0",
-  "author": "Tom MacWright",
+  "version": "3.0.1",
+  "author": "Reini Urban",
   "bin": {
     "geojsonhint": "./bin/geojsonhint"
   },
   "bugs": {
-    "url": "https://github.com/mapbox/geojsonhint/issues"
+    "url": "https://github.com/rurban/geojsonhint/issues"
   },
   "files": [
     "geojsonhint.js",
@@ -40,7 +40,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mapbox/geojsonhint.git"
+    "url": "git://github.com/rurban/geojsonhint.git"
   },
   "scripts": {
     "test": "eslint . && tap test/*.js --coverage",
