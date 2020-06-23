@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Fixed the rhr check (forked to @rurban)
+
 ## 3.0.0
 
 * Bump tested node versions to 8 & 10
