@@ -1,6 +1,7 @@
 ## 3.0.1
 
 * Bump minimist to >v1.2.5
+* Fixed the rhr check (forked to @rurban)
 
 ## 3.0.0
 
