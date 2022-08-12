@@ -75,6 +75,18 @@ With this option enabled, geojsonhint will produce these warnings:
 
 Without this option, this input will pass without errors.
 
+`ignoreRightHandRule`.
+
+GeoJSON specification defined that linear rings must follow right-hand rule, but also says that for backward compatibility reasons parsers should not rejects polygons wiht incorrect winding order. For that kind of situations geojsonhint has an option `ignoreRightHandRule` which is `false` by default. Setting this option to `true` will cause geojsonhint to skip right-hand rule validation.
+
+```js
+geojsonhint.hint(geojsonWithIncorrectWindingOrder, {
+  ignoreRightHandRule: true
+});
+````
+
+with this option enabled, geojsonhint will not validate winding order.
+
 ## Line Numbers
 
 Note that the GeoJSON can be given as a **string or as an object**. Here's how

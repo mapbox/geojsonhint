@@ -156,6 +156,39 @@ test('geojsonhint', function(t) {
         });
         t.end();
     });
+    test('ignoreRightHandRule set as true', function(t) {
+        let invalidRHR = filejs('test/data/bad/bad-polygon-interiorring-rhr.geojson');
+        let errors = geojsonhint.hint(invalidRHR, {
+            ignoreRightHandRule: true
+        })
+        t.same(errors, [], 'right hand rule should be ignored when option is explicitly set to true');
+        t.end();
+    });
+    test('ignoreRightHandRule set as false', function(t) {
+        let invalidRHR = filejs('test/data/bad/bad-polygon-interiorring-rhr.geojson');
+        let result = filejs('test/data/bad/bad-polygon-interiorring-rhr.result-object')
+        let errors = geojsonhint.hint(invalidRHR, {
+            ignoreRightHandRule: false
+        })
+        t.same(errors, result, 'right-hand rule should not be ignored if not set explicitly to true');
+        t.end();
+    });
+    test('ignoreRightHandRule is null', function(t) {
+        let invalidRHR = filejs('test/data/bad/bad-polygon-interiorring-rhr.geojson');
+        let result = filejs('test/data/bad/bad-polygon-interiorring-rhr.result-object')
+        let errors = geojsonhint.hint(invalidRHR, {
+            ignoreRightHandRule: null
+        })
+        t.same(errors, result, 'right-hand rule should not be ignored if not set explicitly to true');
+        t.end();
+    });
+    test('ignoreRightHandRule is not in options', function(t) {
+        let invalidRHR = filejs('test/data/bad/bad-polygon-interiorring-rhr.geojson');
+        let result = filejs('test/data/bad/bad-polygon-interiorring-rhr.result-object')
+        let errors = geojsonhint.hint(invalidRHR, {})
+        t.same(errors, result, 'right-hand rule should not be ignored if not set explicitly to true');
+        t.end();
+    });
     test('invalid roots', function(t) {
         t.deepEqual(geojsonhint.hint('null'), [{
             message: 'The root of a GeoJSON object must be an object.',
