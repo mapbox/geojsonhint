@@ -23,7 +23,8 @@ if (argv._[0]) {
 function hint(input) {
 
     var options = {
-      noDuplicateMembers: argv.noDuplicateMembers !== 'false'
+      noDuplicateMembers: argv.noDuplicateMembers !== 'false',
+      ignoreRightHandRule: argv.ignoreRightHandRule === 'true'
     };
 
     var errors = geojsonhint.hint(input.toString(), options);
