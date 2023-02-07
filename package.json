@@ -18,7 +18,6 @@
     "concat-stream": "^1.6.1",
     "jsonlint-lines": "1.7.1",
     "minimist": "^1.2.5",
-    "underscore": "1.12.1",
     "vfile": "^4.0.0",
     "vfile-reporter": "^5.1.1"
   },
