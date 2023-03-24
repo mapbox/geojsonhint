@@ -1,5 +1,9 @@
 ## 3.1.0
 
+* Bump minimist version to 1.28, remeove unused underscore dependency
+
+## 3.1.0
+
 * Adds options to disable right-hand rule validation [#87](https://github.com/mapbox/geojsonhint/pull/87)
 
 ## 3.0.2

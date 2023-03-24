@@ -1,7 +1,7 @@
 {
   "name": "@mapbox/geojsonhint",
   "description": "validate and sanity-check geojson files",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "author": "Tom MacWright",
   "bin": {
     "geojsonhint": "./bin/geojsonhint"
@@ -17,8 +17,7 @@
   "dependencies": {
     "concat-stream": "^1.6.1",
     "jsonlint-lines": "1.7.1",
-    "minimist": "^1.2.5",
-    "underscore": "1.12.1",
+    "minimist": "^1.2.8",
     "vfile": "^4.0.0",
     "vfile-reporter": "^5.1.1"
   },
