@@ -1,3 +1,7 @@
+## 3.2.0
+
+* Remove crs validation
+
 ## 3.1.0
 
 * Bump minimist version to 1.28, remeove unused underscore dependency
