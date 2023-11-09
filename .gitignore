@@ -1,3 +1,4 @@
 .nyc_output
 geojsonhint.js
 node_modules/
+.tap/

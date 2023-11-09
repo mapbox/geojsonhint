@@ -17,13 +17,13 @@ function filejs(x) {
 test('geojsonhint', function(t) {
     glob.sync('test/data/good/*.geojson').forEach(function(f) {
         var gj = file(f);
-        t.deepEqual(geojsonhint.hint(gj), [], f);
+        t.same(geojsonhint.hint(gj), [], f);
     });
-    t.deepEqual(geojsonhint.hint(undefined), [{
+    t.same(geojsonhint.hint(undefined), [{
         message: 'Expected string or object as input',
         line: 0
     }], 'expected string input');
-    t.deepEqual(geojsonhint.hint('{}'), [{
+    t.same(geojsonhint.hint('{}'), [{
         message: '"type" member required',
         line: 1
     }], 'just an object');
@@ -33,7 +33,7 @@ test('geojsonhint', function(t) {
             if (process.env.UPDATE) {
                 fs.writeFileSync(f.replace('geojson', 'result'), JSON.stringify(geojsonhint.hint(gj), null, 2));
             }
-            t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result')), f);
+            t.same(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result')), f);
         });
         t.end();
     });
@@ -94,18 +94,18 @@ test('geojsonhint', function(t) {
             if (process.env.UPDATE) {
                 fs.writeFileSync(f.replace('geojson', 'result-object'), JSON.stringify(geojsonhint.hint(gj), null, 2));
             }
-            t.deepEqual(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result-object')), f);
+            t.same(geojsonhint.hint(gj), filejs(f.replace('geojson', 'result-object')), f);
         });
         t.end();
     });
     test('noDuplicateMembers option=false', function(t) {
-        t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
+        t.same(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
             noDuplicateMembers: false
         }), [], 'sketchy object permitted');
         t.end();
     });
     test('noDuplicateMembers option=true', function(t) {
-        t.deepEqual(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
+        t.same(geojsonhint.hint('{"type":"invalid","type":"Feature","properties":{},"geometry":null}', {
             noDuplicateMembers: true
         }), [{
           line: 1,
@@ -114,7 +114,7 @@ test('geojsonhint', function(t) {
         t.end();
     });
     test('noDuplicateMembers option=true', function(t) {
-        t.deepEqual(geojsonhint.hint('{ "type": "Point", "coordinates": [100.0000000001, 5.0000000001] }', {
+        t.same(geojsonhint.hint('{ "type": "Point", "coordinates": [100.0000000001, 5.0000000001] }', {
             precisionWarning: true
         }), [{
           line: 1,
@@ -148,7 +148,7 @@ test('geojsonhint', function(t) {
             precisionWarning: true
         })
         t.equal(truncated.length, 11);
-        t.deepEqual(truncated[10], {
+        t.same(truncated[10], {
           line: 63,
           level: 'message',
           message: 'truncated warnings: we\'ve encountered coordinate precision warning 10 times, '
@@ -190,15 +190,15 @@ test('geojsonhint', function(t) {
         t.end();
     });
     test('invalid roots', function(t) {
-        t.deepEqual(geojsonhint.hint('null'), [{
+        t.same(geojsonhint.hint('null'), [{
             message: 'The root of a GeoJSON object must be an object.',
             line: 0
         }], 'non-object root');
-        t.deepEqual(geojsonhint.hint('1'), [{
+        t.same(geojsonhint.hint('1'), [{
             message: 'The root of a GeoJSON object must be an object.',
             line: 0
         }], 'number root');
-        t.deepEqual(geojsonhint.hint('"string"'), [{
+        t.same(geojsonhint.hint('"string"'), [{
             message: 'The root of a GeoJSON object must be an object.',
             line: 0
         }], 'string root');
