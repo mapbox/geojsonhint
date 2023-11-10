@@ -1,3 +1,7 @@
+## 3.3.0
+
+* Update dependencies
+
 ## 3.2.0
 
 * Remove crs validation
