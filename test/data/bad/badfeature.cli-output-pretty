@@ -1,3 +1,3 @@
-  1:1  error  Every feature must be an object
+  1:1  [31merror[39m  Every feature must be an object
 
-✖ 1 error
+[31m✖[39m 1 error

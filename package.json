@@ -15,8 +15,9 @@
     "lib"
   ],
   "dependencies": {
+    "@gerhobbelt/nomnom": "github:gerhobbelt/nomnom",
     "concat-stream": "^1.6.1",
-    "jsonlint-lines": "1.7.1",
+    "jsonlint-lines": "^1.7.1",
     "minimist": "^1.2.8",
     "vfile": "^4.0.0",
     "vfile-reporter": "^5.1.1"
@@ -27,7 +28,7 @@
     "eslint": "^5.15.3",
     "fuzzer": "~0.2.0",
     "glob": "^7.1.2",
-    "tap": "^12.6.1"
+    "tap": "^18"
   },
   "directories": {
     "test": "test"
@@ -43,7 +44,10 @@
     "url": "git://github.com/mapbox/geojsonhint.git"
   },
   "scripts": {
-    "test": "eslint . && tap test/*.js --coverage",
+    "test": "eslint . && tap test/*.js --coverage-report=text",
     "prepublish": "browserify . --standalone geojsonhint > geojsonhint.js"
+  },
+  "overrides": {
+    "underscore": "^1.13.0"
   }
 }

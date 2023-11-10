@@ -1,6 +1,6 @@
-  1:1  error  Parse error on line 2:
+  1:1  [31merror[39m  Parse error on line 2:
 ...": "MultiPoint"    "coordinates": [["fo
 ----------------------^
 Expecting 'EOF', '}', ':', ',', ']', got 'STRING'
 
-✖ 1 error
+[31m✖[39m 1 error
