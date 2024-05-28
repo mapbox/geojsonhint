@@ -1,10 +1,11 @@
 
-# This repo has been archived. You can use @placemarkio/check-geojson instead. 
+## This repo has been archived. You can use @placemarkio/check-geojson instead. 
+
 
 
 [![Build Status](https://secure.travis-ci.org/mapbox/geojsonhint.svg?branch=master)](http://travis-ci.org/mapbox/geojsonhint) [![Coverage Status](https://coveralls.io/repos/mapbox/geojsonhint/badge.svg)](https://coveralls.io/r/mapbox/geojsonhint)
 
-## geojsonhint: complete, fast, standards-based validation for geojson
+# geojsonhint: complete, fast, standards-based validation for geojson
 
 Important: development of geojsonhint is currently paused. Until development restarts, please refrain from adding non-critical issues or PRs.
 
